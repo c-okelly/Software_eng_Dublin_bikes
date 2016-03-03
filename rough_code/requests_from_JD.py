@@ -20,14 +20,19 @@ file = request.urlopen(url+key_append).read()
 file_read = file.decode('UTF-8')
 
 # Use re to convert to list of lists
-print(file_read.count("number"))
 file = (re.findall('\{.*?\}.*?\}', file_read))
 
-# Use json lib to convert each station info into seperate dic => but has not master key
+# Use json lib to convert each station info into list of dics => but has no master key
 dict = json.loads(file_read)
+# print(dict[0])
+# print(dict[0].get("number"))
 
-item = dict[0]
-print(item)
+station_data = {}
 
-print(item.get("contract_name"))
+# Convert items into dict that can be called by station number. Each contains a dict of the relevent station data
+for item in dict:
+    key = item.get("number")
+    station_data.update({key:item})
 
+#Example => station 42. Must call using int not string
+print(station_data.get(42))
