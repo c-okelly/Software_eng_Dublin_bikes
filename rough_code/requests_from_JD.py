@@ -15,13 +15,15 @@ specfic_station = "https://api.jcdecaux.com/vls/v1/stations/42?contract=Dublin"
 
 
 file = request.urlopen(url+key_append).read()
-# object = json.loads('{"number":42,"name":"SMITHFIELD NORTH","address":"Smithfield North","position":{"lat":53.349562,"lng":-6.278198},"banking":true,"bonus":false,"status":"OPEN","contract_name":"Dublin","bike_stands":30,"available_bike_stands":24,"available_bikes":6,"last_update":1457002251000}')
 
-
+# Concert file to UTF-8
 file_read = file.decode('UTF-8')
+
+# Use re to convert to list of lists
 print(file_read.count("number"))
 file = (re.findall('\{.*?\}.*?\}', file_read))
 
+# Use json lib to convert each station info into seperate dic => but has not master key
 dict = json.loads(file_read)
 
 item = dict[0]
