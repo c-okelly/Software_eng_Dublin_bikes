@@ -34,9 +34,10 @@ def get_station_data():
     # Convert items into dict that can be called by station number. Each contains a dict of the relevent station data
     for item in dict_time_stamped:
         key = item.get("number")
-        sub_dict = {}
+        sub_dict = {k: item[k] for k in ('last_update', 'status','bike_stands','available_bike_stands','available_bikes')}
 
-        station_data.update({key:item})
+
+        station_data.update({key:sub_dict})
 
     """
     Could trim data at this point to refine for database
@@ -52,6 +53,8 @@ def get_station_data():
 
 if __name__ == '__main__':
     file = get_station_data()
-    print(file.get(42))
-    for i in file.get(42):
-        print(i)
+    station_42 = file.get(42)
+    print(station_42)
+
+    number = station_42.get("last_update")
+    print(type(number))
