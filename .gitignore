@@ -1,6 +1,5 @@
 # Ignore phycharm genreated files
 .DS_Store
-__init__.py
 
 # Ignore Data Directory
 Data/
