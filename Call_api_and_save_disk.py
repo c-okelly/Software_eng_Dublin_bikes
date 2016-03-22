@@ -67,7 +67,7 @@ def time_stamp_and_save_api_call_to_file(api_key="a4dc19867e72bc955aa9a438f2b90a
 
     return station_dicts
 
-def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",directory_to_save_to="Dat"):
+def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",directory_to_save_to="Data/"):
     #Defualt API key is set. Can also insert argument to use an alternative one.
     #Defualt runtime set. Can change to another runtime. Minimum one minute.
 
@@ -128,6 +128,9 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     return static_station_dict
 
 if __name__ == '__main__':
+    # Three main functions.
+
+    # time_stamp_and_save_api_call_to_file()
     # run_every_x_minutes()
     # return_static_data()
     print("Functions are comment out")
