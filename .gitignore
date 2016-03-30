@@ -1,0 +1,5 @@
+# Ignore phycharm genreated files
+.DS_Store
+
+# Ignore Data Directory
+Data/
