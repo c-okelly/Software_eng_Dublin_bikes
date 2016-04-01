@@ -93,14 +93,14 @@ def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f
     while True:
         try:
             time_stamp_and_save_api_call_to_file(api_key,directory_to_save_to)
-            # time.sleep(wait_time)
+            time.sleep(wait_time)
         except:
             current_time = time.gmtime()
             time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
             time_of_week = (time.strftime("%a", current_time))
             print("An error occured at %s on %s" % (time_of_day,time_of_week))
             # Wait 15 seconds before restarting
-            time.sleep(1)
+            time.sleep(15)
 
 def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     # Defualt city is set to Dublin.
@@ -141,7 +141,8 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 if __name__ == '__main__':
     # Three main functions.
 
-    print(time_stamp_and_save_api_call_to_file())
-    # run_every_x_minutes()
+    # print(time_stamp_and_save_api_call_to_file())
+    print("Starting")
+    run_every_x_minutes()
     # return_static_data()
     print("Functions are comment out")
