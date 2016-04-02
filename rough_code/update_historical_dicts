@@ -1,0 +1,52 @@
+# Author: Conor O'Kelly
+# This function will cycle through all of the historical data files and add timestamps and day of the week day in.
+
+import os
+import json
+
+def update_historical_dicts(directory_to_run_in):
+    # List all files
+    all_files = os.listdir(directory_to_run_in)
+
+    file_list = []
+    # Remove any hidden files
+    for item in all_files:
+        if item[0] != ".":
+            file_list.append(item)
+
+    # print(file_list)
+
+    # Cycle through all files
+
+    for json_file in file_list:
+        file_location = directory_to_run_in + json_file
+
+        # Open Json file
+        with open(file_location) as json_object:
+            json_object = (json.load(json_object))
+
+        # Create time stamp variable
+        time_of_day = json_file[0:12]
+        time_of_week = json_file[13:16]
+        time_dict = {"time_stamp":time_of_day,"week_day":time_of_week}
+
+        station_data = {}
+
+        # Convert items into dict that can be called by station number. Each contains a dict of the relevent station data
+        for item in json_object:
+            key = item.get("number")
+            sub_dict = {k: item[k] for k in ('last_update', 'status','bike_stands','available_bike_stands','available_bikes')}
+            sub_dict.update(time_dict)
+            station_data.update({key:sub_dict})
+        print(station_data)
+
+        # Save dict to file and overwrite existing dicts
+        # Save in data directory
+        file_name = directory_to_run_in + json_file
+
+        # Save Json file.
+        with open(file_name, 'w') as f:
+            json.dump(station_data, f, ensure_ascii=False)
+
+if __name__ == '__main__':
+    update_historical_dicts("/Users/cokelly/Desktop/Dublin_bikes_data/Data_old/")

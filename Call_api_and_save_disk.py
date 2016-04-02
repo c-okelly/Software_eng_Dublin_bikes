@@ -34,10 +34,17 @@ def format_station_data(api_key):
     # All station data
     station_data = {}
 
+    # Create time varialbes
+    current_time = time.gmtime()
+    time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
+    time_of_week = (time.strftime("%a", current_time))
+    time_dict = {"time_stamp":time_of_day,"week_day":time_of_week}
+
     # Convert items into dict that can be called by station number. Each contains a dict of the relevent station data
     for item in dict_to_save:
         key = item.get("number")
         sub_dict = {k: item[k] for k in ('last_update', 'status','bike_stands','available_bike_stands','available_bikes')}
+        sub_dict.update(time_dict)
         station_data.update({key:sub_dict})
 
     # print(station_data.get(2))
@@ -82,14 +89,14 @@ def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f
     while True:
         try:
             time_stamp_and_save_api_call_to_file(api_key,directory_to_save_to)
-            # time.sleep(wait_time)
+            time.sleep(wait_time)
         except:
             current_time = time.gmtime()
             time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
             time_of_week = (time.strftime("%a", current_time))
             print("An error occured at %s on %s" % (time_of_day,time_of_week))
             # Wait 15 seconds before restarting
-            time.sleep(1)
+            time.sleep(15)
 
 def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     # Defualt city is set to Dublin.
@@ -130,7 +137,8 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 if __name__ == '__main__':
     # Three main functions.
 
-    # time_stamp_and_save_api_call_to_file()
-    # run_every_x_minutes()
+    # print(time_stamp_and_save_api_call_to_file())
+    print("Starting")
+    run_every_x_minutes()
     # return_static_data()
     print("Functions are comment out")
