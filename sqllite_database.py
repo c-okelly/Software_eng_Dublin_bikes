@@ -7,67 +7,155 @@ import json
 import time
 import os
 
-def create_database(static_data):
+def create_database(static_data, data_directory , data_directory_files):
     """
-        Fuction to create database. Calls functions to create tables and import pre-exisitng data
+        Fuction to create database. Calls functions to create tables and import static and pre-exisitng data
+        :return: None
     """
-    conn = lite.connect('C:\\Users\\Connor Fitzmaurice\\Documents\\COMP30670\\dublinbikes_test_database.db') # connect () works by searching for a database file and connecting to it
+    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db') # connect () works by searching for a database file and connecting to it
     with conn: # Run only if connection is made (optional)
         cur = conn.cursor() # Cursor class which is used to execute SQL statements
 
-        # Create dynamic table
-        cur.execute("CREATE TABLE if not exists Dynamic_Data(Station_number INT, Timestamp INT, Last_update REAL, Status TEXT, Bike_stands INT, Available_bike_stands INT, Available_bikes INT , PRIMARY KEY(Station_number, Timestamp))")
+        # Create dynamic table with primary key
+        cur.execute("CREATE TABLE if not exists Dynamic_Data(Station_number INT, Timestamp INT, Last_update REAL,  Weekday TEXT, Status TEXT, Bike_stands INT, Available_bike_stands INT, Available_bikes INT , PRIMARY KEY(Station_number, Timestamp))")
 
         #Create Static table with primary and foreign keys
-        cur.execute("CREATE TABLE if not exists Static_Data(station_number INT PRIMARY KEY, Name TEXT, Address TEXT, Latitude REAL, Longitude REAL,  FOREIGN KEY(station_number) REFERENCES Dynamic_Data(station_number))")
-        #cur.executemany("INSERT INTO Static_Data ('Latitude','Address','station_number','name','Longtitude') VALUES('?','?','?','?','?')", static_data)
-        for i in range(1,103):
-            if i != 50:
-                station_index = static_data[i]
-                print(station_index)
-                cur.execute("INSERT INTO Static_Data(station_number, Name, Address, Latitude, Longitude) VALUES(?,?,?,?,?)", (station_index['number'], station_index['name'], station_index['address'], station_index['latitude'], station_index['longitude']))
+        cur.execute("CREATE TABLE if not exists Static_Data(Station_number INT PRIMARY KEY, Name TEXT, Address TEXT, Latitude REAL, Longitude REAL,  FOREIGN KEY(station_number) REFERENCES Dynamic_Data(station_number))")
 
-    conn.commit()
+    conn.commit() #Commit dtatbase changes
     cur.close()
     conn.close()# Close connection to allow for tables to be created in seperate functions
 
-    #import_historical_data()
-    #import_dynamic_data()
+    #Import static and historical data
+    import_static_data(static_data)
+    import_historical_data(data_directory)
+    import_historical_data_files(data_directory_files)
 
-def import_historical_data():
+def import_static_data(static_data):
     """
-        Import historical dynamic data. Currently designed for use with parsed dicitonary of dynamic data with station number and timestamp as key
+        Function to import static data into static table
         :return: None
     """
-    conn = lite.connect('dublinbikes_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
-    with conn:
-        cur = conn.cursor()
-        path = "/var/www/html/"
-        dirs = os.listdir( path )
+    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db') # Local path to database
+    try: # Error checking if there is an error on data insertion should not be necessary at all
+        with conn: # Run only if connection is made (optional)
 
-        # This would print all the files and directories
-    for file in dirs:
-        for i in range(1,103):
-            if i != 50:
-                station_index = static_data[i]
-        cur.executemany("INSERT INTO Dynamic_Data (Station_number, Timestamp, Last_update, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES('?','?','?','?','?','?','?')", historical_data_superdictionary_stations)
-    conn.commit()
-    cur.close()
-    conn.close()
+            cur = conn.cursor() # Cursor class which is used to execute SQL statements
+            for station_no in range(1,103):
+                    if station_no != 50:
+                        station_index = static_data[station_no]
+                        cur.execute("INSERT OR IGNORE INTO Static_Data(Station_number, Name, Address, Latitude, Longitude) VALUES(?,?,?,?,?)",
+                                    (station_index['number'], station_index['name'], station_index['address'], station_index['latitude'], station_index['longitude']))
+    except:
+        print('Error. Duplicate key for station number' + str(station_no))
 
-def import_dynamic_data():
+def import_historical_data(data_directory):
+    """
+        Import historical dynamic data. Iterate through json files in sub directory to do so.
+        :return: None
+    """
+
+    #Obtain list of json files in directory
+    dir_files = os.listdir(data_directory)
+
+    #Remove hidden files
+    data_files = []
+    for file in dir_files:
+        if file[0] != '.':
+            data_files.append(file)
+
+    #Iterate through Json files
+    for json_file in data_files:
+        file_path = data_directory + '/' + json_file
+
+        #Open Json file
+        with open(file_path) as json_data:
+            json_data = (json.load(json_data))
+
+       # Make a connection for each file
+        conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+        with conn:
+            cur = conn.cursor()
+            #Open dicitionary in json file and iterate through all stations exlduing 50
+            for station_no in range(1,103):
+                if station_no != 50:
+                    try: #Error checking in case there is a missing station in dataset
+                        station_index = json_data[str(station_no)]
+                        cur.execute("INSERT OR IGNORE INTO Dynamic_Data(Station_number, Timestamp, Last_update, Weekday, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                                (station_no, station_index['time_stamp'], station_index['last_update'],station_index['week_day'], station_index['status'], station_index['bike_stands'],station_index['available_bike_stands'],
+                                station_index['available_bikes']))
+                    except:
+                        print("The dataset is missing station number " + str(station_no))
+        # Close transaction, commiting changes to database
+        conn.commit()
+        cur.close()
+        conn.close()
+
+def import_historical_data_files(data_directory_files):
+    """
+        Import historical dynamic data via files method. Currently designed for use with parsed dicitonary of dynamic data with station number and timestamp as key
+        :return: None
+    """
+    #Obtain list of json files in directory
+    dir_files = os.listdir(data_directory_files)
+
+    #Remove hidden files
+    data_files = []
+    for file in dir_files:
+        if file[0] != '.':
+            data_files.append(file)
+
+    #Iterate through Json files
+    for json_file in data_files:
+        filename_with_type= json_file.split('_', 2)
+        timestamp = filename_with_type[0]
+        filename = filename_with_type[1].split('.', 2)
+        weekday = filename[0]
+        file_path = data_directory_files + '/' + json_file
+
+        #Open Json file
+        with open(file_path) as json_data:
+            json_data = (json.load(json_data))
+
+       # Make a connection for each file
+        conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+        with conn:
+            cur = conn.cursor()
+            #Open dicitionary in json file and iterate through all stations exlduing 50
+            for station_no in range(1,103):
+                if station_no != 50:
+                    try: #Error checking in case there is a missing station in dataset
+                        station_index = json_data[str(station_no)]
+                        cur.execute("INSERT OR IGNORE INTO Dynamic_Data(Station_number, Timestamp, Last_update, Weekday, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                                (station_no, timestamp, station_index['last_update'], weekday, station_index['status'], station_index['bike_stands'],station_index['available_bike_stands'],
+                                station_index['available_bikes']))
+                    except:
+                        print("The dataset is missing station number " + str(station_no))
+        # Close transaction, commiting changes to database
+        conn.commit()
+        cur.close()
+        conn.close()
+
+def import_dynamic_data(dynamic_data):
     """
         Import dynamic . Currently designed for use with parsed dicitonary of dynamic data with station number and timestamp as key
         :return:
     """
     #Connect to database
-    conn = lite.connect('dublinbike_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
     with conn:
         cur = conn.cursor()
-        cur.executemany("INSERT INTO Dynamic_Data (station_number, Timestamp, Last_update, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES('?','?','?','?','?','?','?')", superdicitonary_stations)
+        for station_no in range(1,103):
+            if i != 50:
+                try:
+                    station_index = static_data[i]
+                    cur.execute("INSERT OR IGNORE INTO Dynamic_Data (Station_number, Timestamp, Last_update, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES('?','?','?','?','?','?','?')",
+                               (station_index['number'], station_index['timestamp'], station_index['last_update'], station_index['status'], station_index['bike_stands'],
+                            station_index['available_bike_stands'], station_index['available_bike']))
     conn.commit() #Redundant here
     cur.close()
     conn.close()
+
 
 def database_backup(database, backup):
     """
@@ -79,6 +167,9 @@ def database_backup(database, backup):
     with open('test4_backup.sql', 'w') as f:
         for line in conn.iterdump():
             f.write('%s\n' % line)
+
+
+
 
 def data_retrieval():
     """
@@ -134,7 +225,6 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     return static_station_dict
 
-
+print()
 static_data_dict = return_static_data()
-#print(static_data_dict)
-create_database(static_data_dict)
+create_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
