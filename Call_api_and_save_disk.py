@@ -68,10 +68,6 @@ def time_stamp_and_save_api_call_to_file(api_key="a4dc19867e72bc955aa9a438f2b90a
     # Save in data directory
     file_name = directory_to_save_to + file_name
 
-    # Add time stamp into every sub dictionary
-    # for dict in
-
-
     # Save Json file.
     with open(file_name, 'w') as f:
         json.dump(station_dicts, f, ensure_ascii=False)
