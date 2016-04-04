@@ -274,7 +274,7 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     return static_station_dict
 
 static_data_dict = return_static_data()
-#reate_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
+create_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
 dynamic_data_dict = format_station_data('c22c69d2077c8520674a591abf2aaaccbf6e2440')
 print(dynamic_data_dict)
 import_dynamic_data(dynamic_data_dict)
