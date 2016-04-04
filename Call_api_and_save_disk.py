@@ -134,11 +134,14 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     return static_station_dict
 
-if __name__ == '__main__':
+
     # Three main functions.
 
     # print(time_stamp_and_save_api_call_to_file())
-    print("Starting")
+
+if __name__ == '__main__':
+    print("Starting now")
     run_every_x_minutes()
-    # return_static_data()
+    return_static_data()
     print("Functions are comment out")
+

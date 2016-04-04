@@ -12,7 +12,7 @@ def create_database(static_data, data_directory , data_directory_files):
         Fuction to create database. Calls functions to create tables and import static and pre-exisitng data
         :return: None
     """
-    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db') # connect () works by searching for a database file and connecting to it
+    conn = lite.connect('dublinbikes_test_database.db') # connect () works by searching for a database file and connecting to it
     with conn: # Run only if connection is made (optional)
         cur = conn.cursor() # Cursor class which is used to execute SQL statements
 
@@ -36,7 +36,7 @@ def import_static_data(static_data):
         Function to import static data into static table
         :return: None
     """
-    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db') # Local path to database
+    conn = lite.connect('dublinbikes_test_database.db') # Local path to database
     try: # Error checking if there is an error on data insertion should not be necessary at all
         with conn: # Run only if connection is made (optional)
 
@@ -73,7 +73,7 @@ def import_historical_data(data_directory):
             json_data = (json.load(json_data))
 
        # Make a connection for each file
-        conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+        conn = lite.connect('dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
         with conn:
             cur = conn.cursor()
             #Open dicitionary in json file and iterate through all stations exlduing 50
@@ -118,7 +118,7 @@ def import_historical_data_files(data_directory_files):
             json_data = (json.load(json_data))
 
        # Make a connection for each file
-        conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+        conn = lite.connect('dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
         with conn:
             cur = conn.cursor()
             #Open dicitionary in json file and iterate through all stations exlduing 50
@@ -143,7 +143,7 @@ def import_dynamic_data(dynamic_data):
         :return:
     """
     #Connect to database
-    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
+    conn = lite.connect('dublinbikes_test_database.db',  isolation_level = None) #'Isolation level means that connection is in autocommit mode'
     with conn:
         cur = conn.cursor()
         for station_no in range(1,103):
@@ -273,8 +273,10 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     return static_station_dict
 
-static_data_dict = return_static_data()
-#reate_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
-dynamic_data_dict = format_station_data('c22c69d2077c8520674a591abf2aaaccbf6e2440')
-print(dynamic_data_dict)
-import_dynamic_data(dynamic_data_dict)
+if __name__ == '__main__':
+    static_data_dict = return_static_data()
+    create_database(static_data_dict,'Historical_data/Data','Historical_data/Data_old')
+    dynamic_data_dict = format_station_data('c22c69d2077c8520674a591abf2aaaccbf6e2440')
+    print(static_data_dict)
+    print(dynamic_data_dict)
+    import_dynamic_data(dynamic_data_dict)
