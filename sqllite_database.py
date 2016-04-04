@@ -28,8 +28,8 @@ def create_database(static_data, data_directory , data_directory_files):
 
     #Import static and historical data
     import_static_data(static_data)
-    import_historical_data(data_directory)
-    import_historical_data_files(data_directory_files)
+    #import_historical_data(data_directory)
+    #import_historical_data_files(data_directory_files)
 
 def import_static_data(static_data):
     """
@@ -136,6 +136,7 @@ def import_historical_data_files(data_directory_files):
         cur.close()
         conn.close()
 
+
 def import_dynamic_data(dynamic_data):
     """
         Import dynamic . Currently designed for use with parsed dicitonary of dynamic data with station number and timestamp as key
@@ -146,12 +147,14 @@ def import_dynamic_data(dynamic_data):
     with conn:
         cur = conn.cursor()
         for station_no in range(1,103):
-            if i != 50:
+            if station_no != 50:
                 try:
-                    station_index = static_data[i]
-                    cur.execute("INSERT OR IGNORE INTO Dynamic_Data (Station_number, Timestamp, Last_update, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES('?','?','?','?','?','?','?')",
-                               (station_index['number'], station_index['timestamp'], station_index['last_update'], station_index['status'], station_index['bike_stands'],
-                            station_index['available_bike_stands'], station_index['available_bike']))
+                    station_index = dynamic_data[station_no]
+                    cur.execute("INSERT OR IGNORE INTO Dynamic_Data(Station_number, Timestamp, Last_update, Weekday, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                                (station_no, station_index['time_stamp'], station_index['last_update'],station_index['week_day'], station_index['status'], station_index['bike_stands'],station_index['available_bike_stands'],
+                                station_index['available_bikes']))
+                except:
+                    print("The dataset is missing station number " + str(station_no))
     conn.commit() #Redundant here
     cur.close()
     conn.close()
@@ -167,9 +170,6 @@ def database_backup(database, backup):
     with open('test4_backup.sql', 'w') as f:
         for line in conn.iterdump():
             f.write('%s\n' % line)
-
-
-
 
 def data_retrieval():
     """
@@ -188,6 +188,54 @@ def data_retrieval():
             print(row)
     cur.close()
     conn.close()
+
+
+"""
+Functions for testing
+"""
+
+def get_station_data(api_key):
+
+    # API Key
+    key_append = '&apiKey=' + api_key
+    # Url for bikes live data
+    url = "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin"
+
+    #Request and get json file
+    current_json_file = request.urlopen(url+key_append).read()
+
+    # Convert file to UTF-8
+    current_json_file = current_json_file.decode("UTF-8")
+
+    return current_json_file
+
+
+def format_station_data(api_key):
+
+    json_file = get_station_data(api_key)
+
+    # Convert each station to a list of dicts
+    dict_to_save = json.loads(json_file)
+
+    # All station data
+    station_data = {}
+
+    # Create time variables
+    current_time = time.gmtime()
+    time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
+    time_of_week = (time.strftime("%a", current_time))
+    time_dict = {"time_stamp":time_of_day,"week_day":time_of_week}
+
+    # Convert items into dict that can be called by station number. Each contains a dict of the relevent station data
+    for item in dict_to_save:
+        key = item.get("number")
+        sub_dict = {k: item[k] for k in ('last_update', 'status','bike_stands','available_bike_stands','available_bikes')}
+        sub_dict.update(time_dict)
+        station_data.update({key:sub_dict})
+
+    # print(station_data.get(2))
+
+    return station_data
 
 def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     # Defualt city is set to Dublin.
@@ -225,6 +273,8 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     return static_station_dict
 
-print()
 static_data_dict = return_static_data()
-create_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
+#reate_database(static_data_dict, 'C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data','C:/Users/Connor Fitzmaurice/Documents/COMP30670/ProjectCode/Historical_data/Data_old')
+dynamic_data_dict = format_station_data('c22c69d2077c8520674a591abf2aaaccbf6e2440')
+print(dynamic_data_dict)
+import_dynamic_data(dynamic_data_dict)
