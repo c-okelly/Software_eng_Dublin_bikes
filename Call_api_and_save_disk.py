@@ -1,9 +1,8 @@
 #Author = Conor O'Kelly
 
 import urllib.request as request
-import json
-import time
-import os
+import json, time, os
+import nose2
 
 # Created exception if user tries to run caller function less then one min
 class Run_time_to_short(Exception):
@@ -139,11 +138,45 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     # print(time_stamp_and_save_api_call_to_file())
 
-def live_api_call(api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7"):
+def live_api_call(api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",utf8=False):
 
-    json_object = format_station_data(api_key)
+    # API Key
+    key_append = '&apiKey=' + api_key
+    # Url for bikes live data
+    url = "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin"
 
-    return json_object
+    #Request and get json file
+    current_json_file = request.urlopen(url+key_append).read()
+
+    # Return utf if 8 if requested
+    if utf8 == True:
+        current_json_file = current_json_file.decode("UTF-8")
+
+    return current_json_file
+
+def test_get_station_data():
+
+    result = {}
+    try:
+        result = get_station_data("a4dc19867e72bc955aa9a438f2b90a8c7b6067f7")
+    except:
+        pass
+    # Check that 101 items where returned and that a string is returned from the json object
+    assert result.count("number") == 101
+    print(type(result))
+
+def test_format_station_data():
+
+    result = {}
+    try:
+        result = format_station_data("a4dc19867e72bc955aa9a438f2b90a8c7b6067f7")
+    except:
+        pass
+
+    # Check that first dict is in the correct format
+
+    # print(result)
+
 
 if __name__ == '__main__':
     print("Starting now")
@@ -151,3 +184,4 @@ if __name__ == '__main__':
     # return_static_data()
     # print("Functions are comment out")
     # live_api_call()
+    nose2.main()
