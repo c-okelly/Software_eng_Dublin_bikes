@@ -139,9 +139,15 @@ def return_static_data(city="Dublin",directory_to_save_to="Data/"):
 
     # print(time_stamp_and_save_api_call_to_file())
 
+def live_api_call(api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7"):
+
+    json_object = format_station_data(api_key)
+
+    return json_object
+
 if __name__ == '__main__':
     print("Starting now")
-    run_every_x_minutes()
-    return_static_data()
-    print("Functions are comment out")
-
+    # run_every_x_minutes()
+    # return_static_data()
+    # print("Functions are comment out")
+    # live_api_call()
