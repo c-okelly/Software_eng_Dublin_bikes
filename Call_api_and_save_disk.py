@@ -2,7 +2,7 @@
 
 import urllib.request as request
 import json, time, os
-import nose2
+#import nose2
 
 # Created exception if user tries to run caller function less then one min
 class Run_time_to_short(Exception):
