@@ -213,18 +213,20 @@ def test_trun_every_x_minutes():
         file_name_1 = ("Data/" + time_of_day + "_" + time_of_week + ".json")
 
         # Run function twice
-        run_every_x_minutes(count=1)
+        run_every_x_minutes(count=2)
 
         # Create file name with time stamp and day of the week.
         current_time = time.localtime()
-        time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
-        time_of_week = (time.strftime("%a", current_time))
-        file_name_2 = ("Data/" + time_of_day + "_" + time_of_week + ".json")
+        time_of_year = (time.strftime("%Y%m%d", current_time))
+        # Check file name for 1 minute ago
+        time_of_hour = time.ctime(time.time() - 60)[11:17].replace(":","")
+        file_name_2 = ("Data/" + time_of_year + time_of_hour + "_" + time_of_week + ".json")
 
     except:
         pass
 
     # Check file exists
+    # print(file_name_1,file_name_2)
     assert os.path.isfile(file_name_1) is True
     assert os.path.isfile(file_name_2) is True
 
@@ -247,7 +249,6 @@ def test_live_api_call():
     except:
         pass
 
-    print(type(result))
     # Check that result returneed in bytes type
     assert type(result) == bytes
 
@@ -255,6 +256,6 @@ if __name__ == '__main__':
     print("Starting now")
     # run_every_x_minutes()
     # return_static_data()
-    # print("Functions are comment out")
     # live_api_call()
-    nose2.main()
+    # nose2.main()
+    print("Functions are comment out")
