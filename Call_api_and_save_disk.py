@@ -34,7 +34,7 @@ def format_station_data(api_key):
     station_data = {}
 
     # Create time varialbes
-    current_time = time.gmtime()
+    current_time = time.localtime()
     time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
     time_of_week = (time.strftime("%a", current_time))
     time_dict = {"time_stamp":time_of_day,"week_day":time_of_week}
@@ -55,7 +55,7 @@ def time_stamp_and_save_api_call_to_file(api_key="a4dc19867e72bc955aa9a438f2b90a
     station_dicts = format_station_data(api_key)
 
     # Create file name with time stamp and day of the week.
-    current_time = time.gmtime()
+    current_time = time.localtime()
     time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
     time_of_week = (time.strftime("%a", current_time))
     file_name = (time_of_day + "_" + time_of_week + ".json")
@@ -73,7 +73,7 @@ def time_stamp_and_save_api_call_to_file(api_key="a4dc19867e72bc955aa9a438f2b90a
 
     return station_dicts
 
-def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",directory_to_save_to="Data/"):
+def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",directory_to_save_to="Data/",count=-1):
     #Defualt API key is set. Can also insert argument to use an alternative one.
     #Defualt runtime set. Can change to another runtime. Minimum one minute.
 
@@ -84,18 +84,20 @@ def run_every_x_minutes(repeat_every_x_mins=1,api_key="a4dc19867e72bc955aa9a438f
     # Set wait time to x mins mins 0.25 seconds to account for program run time.
     wait_time = ((60 * repeat_every_x_mins)-0.25)
 
-    # Create loop to run indefinitely
-    while True:
+    number_loops = 0
+    # Create loop to check if it has been run to count. When count reached stops running. Default at -1 so never reaches
+    while number_loops != count:
         try:
             time_stamp_and_save_api_call_to_file(api_key,directory_to_save_to)
             time.sleep(wait_time)
         except:
-            current_time = time.gmtime()
+            current_time = time.localtime()
             time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
             time_of_week = (time.strftime("%a", current_time))
             print("An error occured at %s on %s" % (time_of_day,time_of_week))
             # Wait 15 seconds before restarting
             time.sleep(15)
+        number_loops += 1
 
 def return_static_data(city="Dublin",directory_to_save_to="Data/"):
     # Defualt city is set to Dublin.
@@ -154,29 +156,100 @@ def live_api_call(api_key="a4dc19867e72bc955aa9a438f2b90a8c7b6067f7",utf8=False)
 
     return current_json_file
 
+
+#Testing section
+
 def test_get_station_data():
 
-    result = {}
+    result = ""
     try:
         result = get_station_data("a4dc19867e72bc955aa9a438f2b90a8c7b6067f7")
     except:
         pass
     # Check that 101 items where returned and that a string is returned from the json object
     assert result.count("number") == 101
-    print(type(result))
+    assert type(result) == str
 
 def test_format_station_data():
 
-    result = {}
+    result = ""
     try:
         result = format_station_data("a4dc19867e72bc955aa9a438f2b90a8c7b6067f7")
     except:
         pass
 
-    # Check that first dict is in the correct format
+    # Check that for dictionary type
+    assert type(result) == dict
+    # Check any dict for all keys being present
+    assert 'available_bikes' and 'status' and'bike_stands' and 'week_day' and 'available_bike_stands' and 'time_stamp' and 'last_update' in result[1]
 
-    # print(result)
+def test_time_stamp_and_save_api_call_to_file():
 
+    results = ""
+    try:
+        results = time_stamp_and_save_api_call_to_file()
+    except:
+        pass
+
+    # Create file name with time stamp and day of the week.
+    current_time = time.localtime()
+    time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
+    time_of_week = (time.strftime("%a", current_time))
+    file_name = ("Data/" + time_of_day + "_" + time_of_week + ".json")
+
+    # Check dict is returned
+    assert type(results) == dict
+    # Check file exists
+    assert  os.path.isfile(file_name) is True
+
+def test_trun_every_x_minutes():
+
+
+    try:
+         # Create file name with time stamp and day of the week.
+        current_time = time.localtime()
+        time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
+        time_of_week = (time.strftime("%a", current_time))
+        file_name_1 = ("Data/" + time_of_day + "_" + time_of_week + ".json")
+
+        # Run function twice
+        run_every_x_minutes(count=1)
+
+        # Create file name with time stamp and day of the week.
+        current_time = time.localtime()
+        time_of_day = (time.strftime("%Y%m%d%H%M", current_time))
+        time_of_week = (time.strftime("%a", current_time))
+        file_name_2 = ("Data/" + time_of_day + "_" + time_of_week + ".json")
+
+    except:
+        pass
+
+    # Check file exists
+    assert os.path.isfile(file_name_1) is True
+    assert os.path.isfile(file_name_2) is True
+
+def test_return_static_data():
+
+    result = ""
+    try:
+        result = return_static_data()
+    except:
+        pass
+
+    # Test dict returned
+    assert type(result) == dict
+
+def test_live_api_call():
+
+    result = ""
+    try:
+        result = live_api_call()
+    except:
+        pass
+
+    print(type(result))
+    # Check that result returneed in bytes type
+    assert type(result) == bytes
 
 if __name__ == '__main__':
     print("Starting now")
