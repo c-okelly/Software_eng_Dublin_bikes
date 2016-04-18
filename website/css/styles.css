@@ -1,0 +1,659 @@
+/* Layout for document 
+
+General Formating
+Idividual Backgrounds
+Body Formatting
+Nav
+Main section
+Footer
+Social Icons
+
+*/
+
+
+    /* General formating classes */
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+
+}
+
+.body {
+    font-family: 'Trebuchet MS', Helvetica, sans-serif; 
+    
+}
+
+
+    /* Internal Padding */
+
+body {
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+}
+
+
+/* Individual backrounds */
+
+.index {
+    background-image: url(../images/Index%20background.jpg);
+}
+
+.contact {
+     background-image: url(../images/contact.jpg);
+}
+
+.histroy_of_cycling { 
+    background-image: url(../images/History%20of%20touring.jpg);
+    
+}
+
+.histroy_of_the_bike {
+    background-image: url(../images/history%20of%20the%20bike.jpg);
+}
+
+.what_is_touirng {
+    background-image: url(../images/What%20is%20toruing.jpg)
+}
+
+.how_to_tour {
+    background-image: url(../images/How%20to%20tour.jpg)
+}
+
+.the_kit {
+    background-image: url(../images/The%20kit.jpg)
+}
+
+.lw_kit {
+    background-image: url(../images/light%20weight%20kit.jpg)
+}
+
+.mw_kit {
+    background-image: url(../images/Medium%20weight%20kit.jpg)
+}
+
+.hw_kit {
+    background-image: url(../images/Heavy%20weight%20kit.jpg)
+}
+
+.trip_ideas {
+    background-image: url(../images/Trip%20Ideas.jpg)
+}
+
+.ireland {
+    background-image: url(../images/Cycling%20Ireland.jpg)
+}
+
+.europe {
+    background-image: url(../images/Cycle%20Europe.jpg)
+}
+
+.america {
+    background-image: url(../images/Cycle%20America.jpg)
+}
+
+.aisa {
+    background-image: url(../images/Cycling%20Aisa.JPG)
+}
+
+.blogs {
+    background-image: url(../images/Blogs.jpg)
+}
+
+
+/* General Background */
+
+@media (max-width: 670px) {
+    body {
+        background: center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-color: #adb0b8;
+    }
+}
+
+@media (min-width: 670px) {
+    body {
+        background-position: 0rem 0rem;
+        background-size : 100% 100%;
+        background-attachment: fixed;
+        /*-webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;*/
+    }
+}
+
+/* Banner */
+
+.banner {
+    color: red;
+    text-align: center;
+    background-color: #adb0b8;
+    width: 100%;
+    height: 10rem;
+    background-color: #adb0b8;
+    margin: 0 0 0 0;
+    max-width: none; /* Otherwise contaienr makes problems */ 
+    background-image: url(../images/banner.jpg);
+    background-size: 100% 10rem;
+    background-repeat: no-repeat;
+    color: orangered;
+    font-size: 2rem
+}
+
+.banner_text {
+    padding: 1rem 0 0 0;
+}
+
+/* Nav Bar */
+
+
+.nav {
+    width: 100%;
+    margin-top: .75rem;
+    margin-bottom: .75rem;
+}
+
+.nav li {
+    text-align: center;
+}
+
+nav {
+    margin: 10px 10px 10px 10px;   
+}
+
+.nav ul {
+    text-align: center;
+	list-style:none;
+	position:relative;
+	margin:0;
+	padding:0;
+}
+
+.nav ul a {
+	display:block;
+	color:white;
+	text-decoration:none;
+	font-weight:700;
+	font-size:1.2rem;
+	line-height:3.2rem;
+	padding:0 1.5rem;
+    border: 3.5px solid #0a274f;
+    background-color: #4660a7;
+    border-radius: 20px;
+}
+
+.nav ul li
+{
+	position: relative;
+    display: inline-block;
+	margin:0;
+	padding:0;
+
+}
+
+.nav ul li a:hover
+{
+	background:#20b2aa;
+}
+
+.nav ul ul
+{
+	display:none;
+	position:absolute;
+	top:100%;
+	left:0;
+	background:#fff;
+	padding:0;
+    z-index: 999;
+    width: auto;
+    background-color: rgba(255,255,255,0);
+    min-width: 100%;
+}
+
+.nav ul ul li
+{
+	float:none;
+	width:auto;
+    display: block;
+    white-space:nowrap;
+    margin-top: .25rem;
+}
+
+.nav ul ul a
+{
+
+	padding:0 .4rem 0 .4rem;
+    z-index: 999;
+    background-color: white;
+    color:#4660a7; 
+}
+
+
+.nav ul li:hover > ul{
+	display:block
+}
+
+nav select {
+  display: none;
+}
+
+@media (max-width: 670px) {
+    nav ul     { 
+        display: none; 
+}
+    nav select { 
+        display: inline-block; 
+}
+    .mobile_nav {
+    text-align: center;
+    border: 3.5px solid #0a274f;
+    background-color: #4660a7;
+    border-radius: 20px;
+    padding: 5px 0 5px 0;
+    width:80%;
+    margin-left: auto; margin-right: auto;
+}
+    .banner {
+        display: none;
+    }
+}
+
+/* Main section wrapper */
+
+.main {
+    z-index: 500; /* So the the nav bar floats over the top */    
+}
+
+.tran_back {
+    
+}
+
+.main_header {
+    text-align: center;
+    font-size: 2rem;
+    background-color: rgba(77,151,225,.9);
+    border: .1rem solid black;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.main_row1 {
+    background-color: rgba(77,151,225,.8);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.main_row2 {
+    background-color: rgba(77,151,225,.8);
+}
+
+.main_row3 {
+    background-color: rgba(77,151,225,.8);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* Footer */
+
+.footer {
+    background-color:#e14d4d;
+    color: white;
+    height:auto;
+    width: 100%;
+    max-width: none;
+    padding: 1rem 1rem 1rem 1rem;
+    margin-top: 2rem;
+}
+        /* Footer to change with screen size */
+
+@media screen and (max-width : 550px){
+    .small_footer { 
+        text-align: center;
+        border: 2px solid black;
+    }
+    .small_social {
+        border-bottom: 2px solid black;
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+    }    
+}
+
+
+
+/* Social media buttons */
+
+.social a {
+    margin: 0 .5rem 0 .5rem;
+}
+
+/* Make an Image rotate */
+
+.rotate    {
+    -webkit-transition-duration:0.8s;   
+    -moz-transition-duration:0.8s;    
+    -o-transition-duration:0.8s;    
+    transition-duration:0.8s;
+
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    overflow:hidden;   
+}  
+ 
+.rotate:hover  {
+    -webkit-transform:rotate(360deg);
+    -moz-transform:rotate(360deg);
+    -o-transform:rotate(360deg);
+} 
+a.email {
+    color: white;
+}
+
+a.email:visited {
+    color: white;
+}
+
+a.email:hover {
+    color: white;
+}
+
+a.red:visited {
+    color: #990000;
+}
+a.red:hover {
+    color: #990000;
+}
+a.red {
+    color: #990000;
+}
+
+a:visited {
+    color: black;
+}
+a:hover {
+    color: black;
+}
+a {
+    color: black;
+}
+
+/* Genreal page formatting */
+
+.bold_lined {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.not_lined {
+    text-decoration: none;   
+}
+
+/* Individual page formating */
+
+
+.index_row1 {
+    margin-top: 1rem;
+    font-size: 20px;
+    height: auto;
+    
+}
+
+/* Avoid internal padding within main sectio with left and right */
+
+.main_box_left {
+    padding: 1.5rem 0rem 1.5rem 1.5rem;
+}
+
+.main_box_right {
+    padding: 1.5rem 1.5rem 1.5rem 0rem;
+}
+
+.main_box_center {
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+}
+/* adds back in margin when colums shift*/
+
+@media screen and (max-width:700px){
+    .main_box_left {
+        padding: 1.5rem 2rem 1.5rem 2rem;
+    }
+
+    .main_box_right {
+        padding: 1.5rem 2rem 1.5rem 2rem;
+    }
+
+}
+/* background for boxes */
+.box_back {
+    background-color:#35699d; 
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+}
+
+.box_no_back {
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+}
+
+/* Image manipluation */
+.img_fit {
+    max-width:100%;
+    max-height:100%;
+}
+
+.img_fit_round {
+    max-width:100%;
+    max-height:100%;
+    border-radius: 20px;
+    border: .5px solid black;
+}
+
+.index_images_left {
+    padding: 1.5rem 0 0 1.5rem;
+}
+
+.index_images_center {
+    padding: 1.5rem .75rem 0 .75rem;
+}
+
+.index_images_right {
+    padding: 1.5rem 1.5rem 0 0;
+    
+}
+/* Image box on index */
+.index_side_pic {
+    height: auto;
+    width: auto;
+}
+
+
+@media screen and (max-width:700px){
+    .index_images_left {
+        padding: .75rem 1.5rem .75rem 1.5rem;
+    }
+
+    .index_images_center {
+        padding: .75rem 1.5rem .75rem 1.5rem;
+    }
+
+    .index_images_right {
+        padding: .75rem 1.5rem .75rem 1.5rem;
+
+    }
+    .main_row1 {
+    background-color: rgba(77,151,225,.8);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+}
+
+/* twitter element */
+
+.twitter-timeline {
+    width: 100%;
+    align-content: center;
+    min-width: 20rem;
+}
+
+/* Responsive element for contact us form */
+
+.text_area {
+    width: 90%;
+}
+
+.spaced td {
+    padding-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 750px)  {
+
+	table, td, tr { 
+		display: block; 
+	}
+	
+	tr { 
+        border: 1px solid #ccc; 
+    }
+	
+	td { 
+        padding: 0 0 0 2rem;
+	}
+}
+
+/* text wraped image on what is touring page */
+.what_tour_text_wraped {
+    height:50rem; 
+    float:right;
+    padding: 2rem 0rem 2rem 2rem;
+}
+
+.blog_text_wraped {
+    width:  50%; 
+    float:right;
+    padding: 2rem 0rem 2rem 2rem;
+}
+
+@media screen and (max-width:800px){
+    .blog_text_wraped {
+    width:100%;
+    float:right;
+    padding: 2rem 0rem 2rem 2rem;
+}
+    .text_img_blog {
+        padding: 1rem 0rem 1rem 1rem;
+        align-content: center;
+    }
+}
+
+kit_text_wraped {
+    height:50rem; 
+    float:right;
+    padding: 2rem 0rem 2rem 2rem;
+}
+
+
+@media screen and (max-width:650px){
+    .what_tour_text_wraped {
+        width:100%;
+        float:right;
+    }   
+    .text_img_wit {
+        padding: 1rem 0rem 1rem 1rem;
+        align-content: center;
+    }
+    
+.text_img_kit {
+    padding: 1rem 1rem 1rem 1rem;
+    align-content: center;
+    width: 95%;
+    border: 2px solid black; 
+}
+}
+
+.box_back_entire_row {
+    background-color: white; 
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+.border {
+    border: .1rem solid #9e0b0f;
+    border-radius: 20px;
+    padding: .5rem .5rem .5rem .5rem;
+}
+
+.border_black {
+    border: 2px solid black;
+}
+
+
+
+.trips_image {
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+.trip_image {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem 0 1rem 0;
+}
+
+
+
+.center_colum {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.lined td{
+    border:5px solid black;
+}
+
+.pressue_display {
+    display: none;
+}
+
+.wind_speed_display {
+    display: none;
+}
+
+.humidity_display {
+    display: none;
+}
+
+
+.day_1_extend_forcast  {
+    display: none;
+}
+
+.day_2_extend_forcast {
+    display: none;
+}
+
+.day_3_extend_forcast {
+    display: none;
+}
+
+.day_4_extend_forcast {
+    display: none;
+}
+
+.day_5_extend_forcast {
+    display: none;
+}
+
