@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $(".sub_button").click(function () {
-    alert("Hello");
+//    alert("Hello");
     reload_map();
     });
 });
@@ -23,10 +23,45 @@ var reload_map = function() {
       center: {lat: 53.3498, lng: -6.2603},
       zoom: 13
     });
-    marker = new google.maps.Marker({
-    map: map,
-    draggable: true,
-    animation: google.maps.Animation.DROP,
-    position: {lat: 53.3498, lng: -6.2603}
-  })
+    // Set pin colour
+//    var x = 1;
+//    var pin_url = "";
+    var infoBubble, marker;
+
+    var data_list = [['first window',53.3498,-6.2603,.3],["second window",53.3498,-6.20,.8]];
+    
+    
+    for (i=0;i<2;i++) {
+        
+        marker = new google.maps.Marker({
+            map: map,
+            icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            position: {lat: data_list[i][1], lng: data_list[i][2]}
+            });
+        
+        infoBubble = new InfoBubble({
+              map: map,
+              content: '<div class="phoneytext"><p><br><br>'+data_list[i][0]+'</p></div>',
+              shadowStyle: 1,
+              padding: 0,
+              backgroundColor: 'rgb(20,99,99)',
+              borderRadius: 4,
+              arrowSize: 10,
+              borderWidth: 1,
+              borderColor: '#2c2c2c',
+              disableAutoPan: true,
+              hideCloseButton: false,
+              arrowPosition: 30,
+              backgroundClassName: 'phoney',
+              arrowStyle: 2
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infoBubble.setContent(data_list[i][0]);
+                    infoBubble.open(map, marker);
+                }
+            })(marker, i));
+    };
 };
