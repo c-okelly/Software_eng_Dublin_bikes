@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    $(".sub_button").click(function () {
-//    alert("Hello");
-    reload_map();
+    $(".sub_button").click(function () {        
+        reload_map();
+        
+        
     });
 });
 
@@ -18,19 +19,25 @@ function initMap() {
 
 
 // Fucntion that will load in Dublin bikes load markers depending on SQL data
-var reload_map = function() {
+
+    // Reload map
+    var reload_map = function() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 53.3498, lng: -6.2603},
       zoom: 13
     });
-    // Set pin colour
-//    var x = 1;
-//    var pin_url = "";
-    var infoBubble, marker;
-
+    //Get data based on user request
+        
     var data_list = [['first window',53.3498,-6.2603,.3],["second window",53.3498,-6.20,.8]];
+        
+    // Input data into map
+    generate_markers_for_range(data_list);
     
     
+    
+};
+
+var generate_markers_for_range = function(data_list) {
     for (i=0;i<2;i++) {
         
         marker = new google.maps.Marker({
@@ -64,4 +71,5 @@ var reload_map = function() {
                 }
             })(marker, i));
     };
-};
+}
+
