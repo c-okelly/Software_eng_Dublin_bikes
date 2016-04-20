@@ -88,11 +88,12 @@ def get_stations():
     for row in rows:
         stations.append(row)
 
+    # Possible alternative solution. Not working as off now for more then one json object.
     # Create json object from stations list
-    json_object = []
-    for i in range(0,len(stations)):
-        json_file = jsonify(station_no=stations[i][0],station_name=stations[i][1],address=stations[i][2],lat=stations[i][3],long=stations[i][4])
-        json_object.append(json_file)
+    # json_object = []
+    # for i in range(0,len(stations)):
+    #     json_file = jsonify(station_no=stations[i][0],station_name=stations[i][1],address=stations[i][2],lat=stations[i][3],long=stations[i][4])
+    #     json_object.append(json_file)
 
     # Turn list into
     json_array = json.dumps(stations)
