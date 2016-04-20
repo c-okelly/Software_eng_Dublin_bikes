@@ -44,6 +44,6 @@ def get_stations():
 
     return jsonify(stations=stations)
 
-conn = get_db()
+##conn = get_db()
 if __name__ == "__main__":
     app.run(debug=True)
