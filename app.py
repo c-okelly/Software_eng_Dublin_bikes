@@ -24,6 +24,8 @@ def close_connection(exception):
         db.close()
 
 
+
+
 # this route simply serves base html file
 @app.route('/')
 def root():
