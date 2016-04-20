@@ -27,18 +27,23 @@ function initMap() {
       zoom: 13
     });
     // Load static data json file
-     var static_data = [];
-        $.ajax({
-          url: 'Dublin.json',
-          async: false,
-          dataType: 'json',
-          success: function (json) {
-            static_data = json;
-          }
-        });
+//     var static_data = [];
+//        $.ajax({
+//          url: 'Dublin.json',
+//          async: false,
+//          dataType: 'json',
+//          success: function (json) {
+//            static_data = json;
+//          }
+//        });
 
-        console.log(static_data); // http://127.0.0.1:5000/    
+////        console.log(static_data); // http://127.0.0.1:5000/    
+        $.getJSON("http://127.0.0.1:5000/Static_Data", function(data) {
+            json = data;
+            console.log(data[0][4]);
+        })
         
+
         
     //Get data based on user request
         
