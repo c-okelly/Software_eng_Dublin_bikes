@@ -26,6 +26,20 @@ function initMap() {
       center: {lat: 53.3498, lng: -6.2603},
       zoom: 13
     });
+    // Load static data json file
+     var static_data = [];
+        $.ajax({
+          url: 'Dublin.json',
+          async: false,
+          dataType: 'json',
+          success: function (json) {
+            static_data = json;
+          }
+        });
+
+        console.log(static_data); // http://127.0.0.1:5000/    
+        
+        
     //Get data based on user request
         
     var data_list = [['first window',53.3498,-6.2603,.3],["second window",53.3498,-6.20,.8]];
@@ -36,6 +50,7 @@ function initMap() {
     
     
 };
+
 
 var generate_markers_for_range = function(data_list) {
     for (i=0;i<2;i++) {
