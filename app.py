@@ -7,11 +7,11 @@ app = Flask(__name__)
 DATABASE = 'dublinbikes_test_database.db'
 MAPS_APIKEY = 'AIzaSyBy8wTZI8iqNkK5QcB2XPusZl03xvcGV9c'
 def connect_to_database():
-    return sqlite3.connect(["DATABASE"])
+    return sqlite3.connect([DATABASE])
 
 
 def get_db():
-    db = getattr(g, '_database', None)
+    db = getattr(g, DATABASE, None)
     if db is None:
         db = g._database = connect_to_database()
     return db
@@ -19,7 +19,7 @@ def get_db():
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, '_database', None)
+    db = getattr(g, DATABASE, None)
     if db is not None:
         db.close()
 
