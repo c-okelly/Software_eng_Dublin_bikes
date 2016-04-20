@@ -4,14 +4,14 @@ import json
 import sqlite3
 # Create our flask app. Static files are served from 'static' directory
 app = Flask(__name__)
-DATABASE = 'dublinbikes_test_database.db'
+DATABASE = '/dublinbikes_test_database.db'
 MAPS_APIKEY = 'AIzaSyBy8wTZI8iqNkK5QcB2XPusZl03xvcGV9c'
 def connect_to_database():
-    return sqlite3.connect([DATABASE])
+    return sqlite3.connect(DATABASE)
 
 
 def get_db():
-    db = getattr(g, DATABASE, None)
+    db = getattr(g, '_database', None)
     if db is None:
         db = g._database = connect_to_database()
     return db
@@ -19,7 +19,7 @@ def get_db():
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, DATABASE, None)
+    db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
@@ -42,7 +42,7 @@ def get_stations():
     for row in rows:
         stations.append(row)
 
-    return jsonify(stations=stations)
+    return jsonify(stations)
 
 ##conn = get_db()
 if __name__ == "__main__":
