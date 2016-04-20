@@ -40,7 +40,7 @@ function initMap() {
 ////        console.log(static_data); // http://127.0.0.1:5000/    
         $.getJSON("http://127.0.0.1:5000/Static_Data", function(data) {
             json = data;
-            console.log(data[0][4]);
+            console.log(data);
         })
         
 
