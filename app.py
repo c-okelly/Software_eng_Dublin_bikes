@@ -38,15 +38,10 @@ def get_stations():
     stations = []
     rows = cur.execute("SELECT * from Static_Data;")
     for row in rows:
-        row = dict(row)
-        row['position'] =eval(row['position'])
-        row['latitude'] = row['longitude']
-        row['longitude'] = row['latitude']
-
         stations.append(row)
 
     return jsonify(stations=stations)
 
-
+conn = get_db()
 if __name__ == "__main__":
     app.run(debug=True)
