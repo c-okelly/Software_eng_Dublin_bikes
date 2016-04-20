@@ -42,7 +42,7 @@ def get_stations():
     for row in rows:
         stations.append(row)
 
-    return jsonify(stations=stations)
+    return jsonify(stations)
 
 ##conn = get_db()
 if __name__ == "__main__":
