@@ -1,6 +1,6 @@
 # Ignore phycharm genreated files
 .DS_Store
-_pycache__/
+__pycache__/
 
 # Ignore Data Directory
 Data/
