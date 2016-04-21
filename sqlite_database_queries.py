@@ -26,3 +26,24 @@ def past_historical_call(user_timestamp, user_weekday, user_station):
     conn.commit()
     cur.close()
     conn.close()
+    
+def create_average_tables():
+    """
+        Fuction to create averages tables for database to allow for faster queries.
+        :return: None
+    """
+    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/SoftwareProject/ProjectCode/dublinbikes_database.db')
+    try:
+        with conn:
+            cur = conn.cursor()
+    
+            # Create weekly average table
+            cur.execute("CREATE TABLE if not exists Weekly_Averages(Station_number INT,  Weekday_average TEXT, Average_available_bikes INT, Average_available_bike_stands INT, PRIMARY KEY(Station_number, Weekday))")
+    
+            # Create hourly average table
+            cur.execute("CREATE TABLE if not exists Daily_Averages(Station_number INT, Weekday TEXT, Hour INT, Average_Available_bikes INT,  Average_Available_bike_stands INT, PRIMARY KEY(Station_number, Weekday, Hour))")
+    except:
+        print("Error in table creation")
+    conn.commit()
+    cur.close()
+    conn.close()
