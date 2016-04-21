@@ -146,3 +146,43 @@ def query_weekly_average(user_station, user_weekday):
     conn.commit()
     cur.close()
     conn.close()
+    
+def query_hourly_average(user_station, user_weekday):
+    conn = lite.connect(
+        'C:/Users/Connor Fitzmaurice/Documents/COMP30670/SoftwareProject/ProjectCode/dublinbikes_database.db')
+    
+    try:
+        with conn:
+        cur = conn.cursor()
+
+        #  Average hourly bikes and stands for all stations for one week
+        # cur.execute(
+        #     "SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
+        # stations_hourly_average_bikes = cur.fetchall()
+        # print('\nHourly average bikes for one week for all stations ', )
+        # print(stations_hourly_average_bikes)
+        # print(len(stations_hourly_average_bikes))
+
+        # Version 1, average hourly bikes ands stands just for a specific station on 1 day
+        # cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages WHERE Weekday = (?) AND Station_number = (?)",(user_weekday, user_station))
+        # specific_day_specific_station_hourly_average_bikes = cur.fetchall()
+        # print('\nAverage hourly bikes available for one specific station on one day', specific_day_specific_station_hourly_average_bikes )
+        
+        # Version 2, average hourly bikes for one station for whole week
+        # cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages WHERE Station_number = (?)", (user_station, ))
+        # specific_station_hourly_average_bikes = cur.fetchall()
+        # print('\nAverage hourly bikes for one station for week',)
+        # print(specific_station_hourly_average_bikes)
+        # print(len(specific_station_hourly_average_bikes))
+
+        #Version 4, average hourly bikes for all stations on specific day
+        # cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages WHERE Weekday = (?)", (user_weekday,))
+        # stations_specific_day_hourly_average_bikes = cur.fetchall()
+        # print('\nAverage hourly bikes for stations  one one day', )
+        # print(stations_specific_day_hourly_average_bikes)
+        # print(len(stations_specific_day_hourly_average_bikes))
+    except:
+        print("Error in weekly query")
+    conn.commit()  # Commit dtatbase changes
+    cur.close()
+    conn.close()
