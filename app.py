@@ -145,16 +145,13 @@ def Hist_call(Timestamp):
 
         return json_array
 
-##"/station_occupancy_timeline/<int:station_id>"
-
-
-@app.route("/Hourly_call/<Time_stamp>")
+@app.route("/Hourly_call/<day_of_week>/<hour>")
 @crossdomain(origin='*') # Allow crossdomain request for this funciton any origin
-def Hist_hourly_call(Time_stamp):
+def Hist_hourly_call(day_of_week,hour):
         conn = get_db()
         cur = conn.cursor()
         Hourarray = []
-        hourrows = cur.execute(("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages where Timestamp =")(Time_stamp))
+        hourrows = cur.execute(("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages where Weekday = (?) and Hour = (?)"),(day_of_week,hour))
         for row in hourrows:
             Hourarray.append(row)
 
@@ -172,11 +169,6 @@ def Hist_hourly_call(Time_stamp):
         stations_dict = {}
         for i in range(0, len(stations)):
             stations_dict[i] = stations[i]
-
-
-
-
-
 
         total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
         json_array = json.dumps(total_ob)
