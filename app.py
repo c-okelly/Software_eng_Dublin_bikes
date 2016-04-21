@@ -98,7 +98,7 @@ def get_stations():
     live_rows = cur.execute("SELECT Station_number, Timestamp, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
     for i in live_rows:
         live_stations.append(i)
-    print(live_stations)
+    # print(live_stations)
 
     live_data = {}
     for i in range(0,len(live_stations)):

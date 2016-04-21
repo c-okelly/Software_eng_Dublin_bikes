@@ -37,12 +37,23 @@ function initMap() {
             })
         }
         // Historical Load
-        else if (data_type === 2){
+        else if (data_type === "2"){
+            var timestamp = String(201604201724);
             
+            $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
+            json = data;
+            console.log(data);
+            })
         }
         // Historical hourly avaerage
-        else if (data_type === 3){
-            
+        else if (data_type === "3"){
+            var day_week = $("#hist_hour_day").val();
+            var hour_day =  $("#hist_hour_hour").val();
+            // "+day_week+"/"+hour_day
+            $.getJSON("http://127.0.0.1:5000/Hourly_call/"+day_week+"/"+hour_day, function(data) {
+            json = data;
+            console.log(data);
+            })
         }
         
 
