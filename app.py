@@ -147,12 +147,12 @@ def Hist_call(Timestamp):
 ##"/station_occupancy_timeline/<int:station_id>"
 
 
-@app.route("/Hourly_call")
-def Hist_hourly_call(Timestamp):
+@app.route("/Hourly_call/<Time_stamp>")
+def Hist_hourly_call(Time_stamp):
         conn = get_db()
         cur = conn.cursor()
         Hourarray = []
-        hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
+        hourrows = cur.execute(("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages where Timestamp =")(Time_stamp))
         for row in hourrows:
             Hourarray.append(row)
 
