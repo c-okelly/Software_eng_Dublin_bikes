@@ -99,9 +99,79 @@ def get_stations():
     return json_array
 
 # Test of inputing varialbes
-@app.route("/Static/<username>/<second>")
-def Do_something(username,second ):
-    return username + " go "+ second
+@app.route("/Historical_Call/<Timestamp>")
+def Hist_call(Timestamp):
+        conn = get_db()
+        cur = conn.cursor()
+        histarray = []
+        hrows = cur.execute(("SELECT Station_number, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number"),(Timestamp,))
+        for row in hrows:
+            histarray.append(row)
+
+        # Turn list into
+        Hist_dict = {}
+        for i in range(0, len(histarray)):
+            Hist_dict[i] = histarray[i]
+
+        stations = []
+        rows = cur.execute("SELECT * from Static_Data;")
+        for row in rows:
+            stations.append(row)
+
+        # Turn list into
+        stations_dict = {}
+        for i in range(0, len(stations)):
+            stations_dict[i] = stations[i]
+
+
+
+
+
+
+        total_ob = {"Historical data": Hist_dict, "Static Data": stations_dict}
+        json_array = json.dumps(total_ob)
+
+        return json_array
+
+##"/station_occupancy_timeline/<int:station_id>"
+
+
+@app.route("/Hourly_call")
+def Hist_call(Timestamp):
+        conn = get_db()
+        cur = conn.cursor()
+        Hourarray = []
+        hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
+        for row in hourrows:
+            Hourarray.append(row)
+
+        # Turn list into
+        Hour_dict = {}
+        for i in range(0, len(Hourarray)):
+            Hour_dict[i] = Hourarray[i]
+
+        stations = []
+        rows = cur.execute("SELECT * from Static_Data;")
+        for row in rows:
+            stations.append(row)
+
+        # Turn list into
+        stations_dict = {}
+        for i in range(0, len(stations)):
+            stations_dict[i] = stations[i]
+
+
+
+
+
+
+        total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
+        json_array = json.dumps(total_ob)
+
+        return json_array
+
+
+
 
 ##conn = get_db()
 if __name__ == "__main__":
