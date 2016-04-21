@@ -93,7 +93,18 @@ def get_stations():
     for i in range(0,len(stations)):
         stations_dict[i] = stations[i]
 
-    total_ob = {"Static_data": stations_dict, "Live_info":stations_dict}
+    # Live info
+    live_stations = []
+    live_rows = cur.execute("SELECT Station_number, Timestamp, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
+    for i in live_rows:
+        live_stations.append(i)
+    print(live_stations)
+
+    live_data = {}
+    for i in range(0,len(live_stations)):
+        live_data[i] = live_stations[i]
+
+    total_ob = {"Static_data":stations_dict, "Live_info":live_data}
     json_array = json.dumps(total_ob)
 
     return json_array
@@ -136,39 +147,39 @@ def Hist_call(Timestamp):
 ##"/station_occupancy_timeline/<int:station_id>"
 
 
-@app.route("/Hourly_call")
-def Hist_call(Timestamp):
-        conn = get_db()
-        cur = conn.cursor()
-        Hourarray = []
-        hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
-        for row in hourrows:
-            Hourarray.append(row)
-
-        # Turn list into
-        Hour_dict = {}
-        for i in range(0, len(Hourarray)):
-            Hour_dict[i] = Hourarray[i]
-
-        stations = []
-        rows = cur.execute("SELECT * from Static_Data;")
-        for row in rows:
-            stations.append(row)
-
-        # Turn list into
-        stations_dict = {}
-        for i in range(0, len(stations)):
-            stations_dict[i] = stations[i]
-
-
-
-
-
-
-        total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
-        json_array = json.dumps(total_ob)
-
-        return json_array
+# @app.route("/Hourly_call")
+# def Hist_call(Timestamp):
+#         conn = get_db()
+#         cur = conn.cursor()
+#         Hourarray = []
+#         hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
+#         for row in hourrows:
+#             Hourarray.append(row)
+#
+#         # Turn list into
+#         Hour_dict = {}
+#         for i in range(0, len(Hourarray)):
+#             Hour_dict[i] = Hourarray[i]
+#
+#         stations = []
+#         rows = cur.execute("SELECT * from Static_Data;")
+#         for row in rows:
+#             stations.append(row)
+#
+#         # Turn list into
+#         stations_dict = {}
+#         for i in range(0, len(stations)):
+#             stations_dict[i] = stations[i]
+#
+#
+#
+#
+#
+#
+#         total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
+#         json_array = json.dumps(total_ob)
+#
+#         return json_array
 
 
 
