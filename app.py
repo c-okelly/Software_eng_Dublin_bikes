@@ -93,10 +93,15 @@ def get_stations():
     for i in range(0,len(stations)):
         stations_dict[i] = stations[i]
 
-
-    json_array = json.dumps(stations_dict)
+    total_ob = {"Static_data": stations_dict, "Live_info":stations_dict}
+    json_array = json.dumps(total_ob)
 
     return json_array
+
+# Test of inputing varialbes
+@app.route("/Static/<username>/<second>")
+def Do_something(username,second ):
+    return username + " go "+ second
 
 ##conn = get_db()
 if __name__ == "__main__":
