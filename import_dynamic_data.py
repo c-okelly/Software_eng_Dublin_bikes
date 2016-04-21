@@ -10,7 +10,7 @@ def run_every_x_minutes_database(database_path, data_directory, repeat_every_x_m
     wait_time = ((60 * repeat_every_x_mins)-0.25)
 
     try:
-    		latest_dynamic_data = time_stamp_and_save_api_call_to_file()
+    	latest_dynamic_data = time_stamp_and_save_api_call_to_file()
         import_dynamic_data(database_path, latest_dynamic_data)
         time.sleep(wait_time)
     except:
