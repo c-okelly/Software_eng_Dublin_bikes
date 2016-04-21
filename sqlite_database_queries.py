@@ -12,22 +12,15 @@ def past_historical_call(user_timestamp, user_weekday, user_station):
     try:
         with conn:
             cur = conn.cursor()
-            # Select available bikes
+            # Select available bike ands stands
 
-            # Version 1, just for a specific station
-            cur.execute("SELECT Available_bikes FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?) AND Station_number = (?)", (user_timestamp, user_weekday, user_station))
+            # Version 1,  just for a specific station
+            cur.execute("SELECT Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?) AND Station_number = (?)", (user_timestamp, user_weekday, user_station))
             specific_station_specific_time_bikes = cur.fetchone()
             # Version 2, just for all stations
-            cur.execute("SELECT Available_bikes FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?)", (user_timestamp, user_weekday))
+            cur.execute("SELECT Station_number, Available_bikes,  Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?)", (user_timestamp, user_weekday))
             stations_specific_time_bikes = cur.fetchall()
 
-            # Select available stands
-            # Version 1, just for a specific station
-            cur.execute("SELECT Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?) AND Station_number = (?)",(user_timestamp, user_weekday, user_station))
-            specific_station_specific_time_stands = cur.fetchone()
-            # Version 2, just for all stations
-            cur.execute("SELECT Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) AND Weekday = (?)",(user_timestamp, user_weekday))
-            stations_specific_time_stands = cur.fetchall()
     except:
         print('Error in query')
     conn.commit()
