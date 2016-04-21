@@ -147,39 +147,39 @@ def Hist_call(Timestamp):
 ##"/station_occupancy_timeline/<int:station_id>"
 
 
-# @app.route("/Hourly_call")
-# def Hist_call(Timestamp):
-#         conn = get_db()
-#         cur = conn.cursor()
-#         Hourarray = []
-#         hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
-#         for row in hourrows:
-#             Hourarray.append(row)
-#
-#         # Turn list into
-#         Hour_dict = {}
-#         for i in range(0, len(Hourarray)):
-#             Hour_dict[i] = Hourarray[i]
-#
-#         stations = []
-#         rows = cur.execute("SELECT * from Static_Data;")
-#         for row in rows:
-#             stations.append(row)
-#
-#         # Turn list into
-#         stations_dict = {}
-#         for i in range(0, len(stations)):
-#             stations_dict[i] = stations[i]
-#
-#
-#
-#
-#
-#
-#         total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
-#         json_array = json.dumps(total_ob)
-#
-#         return json_array
+@app.route("/Hourly_call")
+def Hist_hourly_call(Timestamp):
+        conn = get_db()
+        cur = conn.cursor()
+        Hourarray = []
+        hourrows = cur.execute("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
+        for row in hourrows:
+            Hourarray.append(row)
+
+        # Turn list into
+        Hour_dict = {}
+        for i in range(0, len(Hourarray)):
+            Hour_dict[i] = Hourarray[i]
+
+        stations = []
+        rows = cur.execute("SELECT * from Static_Data;")
+        for row in rows:
+            stations.append(row)
+
+        # Turn list into
+        stations_dict = {}
+        for i in range(0, len(stations)):
+            stations_dict[i] = stations[i]
+
+
+
+
+
+
+        total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
+        json_array = json.dumps(total_ob)
+
+        return json_array
 
 
 
