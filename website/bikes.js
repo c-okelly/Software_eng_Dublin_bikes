@@ -26,22 +26,24 @@ function initMap() {
       center: {lat: 53.3498, lng: -6.2603},
       zoom: 13
     });
-    // Load static data json file
-//     var static_data = [];
-//        $.ajax({
-//          url: 'Dublin.json',
-//          async: false,
-//          dataType: 'json',
-//          success: function (json) {
-//            static_data = json;
-//          }
-//        });
-
-////        console.log(static_data); // http://127.0.0.1:5000/    
-        $.getJSON("http://127.0.0.1:5000/Static_Data", function(data) {
+        // Determine call type and collect correct data
+        var data_type = $("input[name=req_type]:checked").val();
+        
+        // Current data call
+        if (data_type === "1"){
+            $.getJSON("http://127.0.0.1:5000/Latest_Data", function(data) {
             json = data;
             console.log(data);
-        })
+            })
+        }
+        // Historical Load
+        else if (data_type === 2){
+            
+        }
+        // Historical hourly avaerage
+        else if (data_type === 3){
+            
+        }
         
 
         

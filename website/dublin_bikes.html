@@ -159,7 +159,7 @@
                                     <tr class="spaced">
                                         <td>
                                             <label for="search_bar">Type of request</label>
-                                            <input type="radio" name="req_type" value="1"> Current load &nbsp;&nbsp;
+                                            <input type="radio" name="req_type" value="1"> Current Data &nbsp;&nbsp;
                                             <input type="radio" name="req_type" value="2"> Historical Load &nbsp;&nbsp;
                                             <input type="radio" name="req_type" value="3"> Historical hourly average load &nbsp;&nbsp;
                                         </td>
@@ -321,60 +321,16 @@
                                     </tr>
                                     <tr class="spaced">
                                         <td class="histroical_hourly_average_load">
-                                            Month <select name="Month">
-<!--
-                                                  <option Value="1">January
-                                                  <option Value="2">Febuary
-                                                  <option Value="3">March
-                                                  <option Value="4">April
--->
-                                                  <option Value="5">May
-<!--
-                                                  <option Value="6">June
-                                                  <option Value="7">July
-                                                  <option Value="8">August
-                                                  <option Value="9">September
-                                                  <option Value="10">October
-                                                  <option Value="11">November
-                                                  <option Value="12">December
--->
+                                            Day of the week <select name="Month">
+                                                    <option Value="Mon">Monday
+                                                    <option Value="Tue">Tuesday
+                                                    <option Value="Wed">Wednesday
+                                                    <option Value="Thur">Thursday
+                                                    <option Value="Fri">Friday
+                                                    <option Value="Sat">Saturday
+                                                    <option Value="Sun">Sunday
+                                                  
                                                 </select>
-                                              Date <select name="DateG">
-                                                      <option Value="1">1
-                                                      <option Value="2">2
-                                                      <option Value="3">3
-                                                      <option Value="4">4
-                                                      <option Value="5">5
-                                                      <option Value="6">6
-                                                      <option Value="7">7
-                                                      <option Value="8">8
-                                                      <option Value="9">9
-                                                      <option Value="10">10
-                                                      <option Value="11">11
-                                                      <option Value="12">12
-                                                      <option Value="13">13
-                                                      <option Value="14">14
-                                                      <option Value="15">15
-                                                      <option Value="16">16
-                                                      <option Value="17">17
-                                                      <option Value="18">18
-                                                      <option Value="19">19
-                                                      <option Value="20">20
-                                                      <option Value="21">21
-                                                      <option Value="22">22
-                                                      <option Value="23">23
-                                                      <option Value="24">24
-                                                      <option Value="25">25
-                                                      <option Value="26">26
-                                                      <option Value="27">27
-                                                      <option Value="28">28
-                                                      <option Value="29">29
-                                                      <option Value="30">30
-                                                      <option Value="31">31
-                                                </select>
-                                              Year: <select>
-                                                    <option Value="2016">2016
-                                            </select>
                                             Hour: <select>
                                                     <option Value="00">00
                                                     <option Value="01">01
