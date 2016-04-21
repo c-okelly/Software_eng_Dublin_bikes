@@ -38,7 +38,7 @@ def create_average_tables():
             cur = conn.cursor()
     
             # Create weekly average table
-            cur.execute("CREATE TABLE if not exists Weekly_Averages(Station_number INT,  Weekday_average TEXT, Average_available_bikes INT, Average_available_bike_stands INT, PRIMARY KEY(Station_number, Weekday))")
+            cur.execute("CREATE TABLE if not exists Weekly_Averages(Station_number INT,  Weekday TEXT, Average_available_bikes INT, Average_available_bike_stands INT, PRIMARY KEY(Station_number, Weekday))")
     
             # Create hourly average table
             cur.execute("CREATE TABLE if not exists Daily_Averages(Station_number INT, Weekday TEXT, Hour INT, Average_Available_bikes INT,  Average_Available_bike_stands INT, PRIMARY KEY(Station_number, Weekday, Hour))")
