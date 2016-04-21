@@ -15,7 +15,7 @@ def past_historical_call(user_timestamp, user_weekday, user_station):
             # Select available bike ands stands
 
             # Version 2, just for all stations
-            cur.execute("SELECT Station_number, Available_bikes, Available_bike_standsFROM Dynamic_Data WHERE Timestamp = (?)", (user_timestamp,))
+            cur.execute("SELECT Station_number, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number", (user_timestamp,))
             stations_specific_time_bikes = cur.fetchall()
 
     except:
