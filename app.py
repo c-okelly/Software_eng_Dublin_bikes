@@ -111,6 +111,7 @@ def get_stations():
 
 # Test of inputing varialbes
 @app.route("/Historical_Call/<Timestamp>")
+@crossdomain(origin='*') # Allow crossdomain request for this funciton any origin
 def Hist_call(Timestamp):
         conn = get_db()
         cur = conn.cursor()
@@ -148,6 +149,7 @@ def Hist_call(Timestamp):
 
 
 @app.route("/Hourly_call/<Time_stamp>")
+@crossdomain(origin='*') # Allow crossdomain request for this funciton any origin
 def Hist_hourly_call(Time_stamp):
         conn = get_db()
         cur = conn.cursor()
