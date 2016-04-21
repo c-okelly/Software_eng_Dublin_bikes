@@ -3,26 +3,6 @@ import urllib.request as request
 import json
 import time
 import os
-
-def past_historical_call(user_timestamp, user_weekday, user_station):
-    """
-        Function to make call to historical data and get information for stations at a specific time
-    """
-    conn = lite.connect('C:/Users/Connor Fitzmaurice/Documents/COMP30670/dublinbikes_database.db')
-    try:
-        with conn:
-            cur = conn.cursor()
-            # Select available bike ands stands
-
-            # Version 2, just for all stations
-            cur.execute("SELECT Station_number, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number", (user_timestamp,))
-            stations_specific_time_bikes = cur.fetchall()
-
-    except:
-        print('Error in query')
-    conn.commit()
-    cur.close()
-    conn.close()
     
 def create_average_tables():
     """
@@ -108,44 +88,5 @@ def update_averages():
     except:
         print('Error in updating average tables')
     conn.commit()
-    cur.close()
-    conn.close()
-
-def query_weekly_average(user_station, user_weekday):
-    conn = lite.connect(
-        'C:/Users/Connor Fitzmaurice/Documents/COMP30670/SoftwareProject/ProjectCode/dublinbikes_database.db')
-    try:
-        with conn:
-            cur = conn.cursor()
-        
-            #  Average hourly bikes and stands for all stations for one week
-            cur.execute(
-                 "SELECT Station_number, Weekday, Average_Available_bikes, Average_Available_Bike_stands FROM Weekly_Averages")
-            stations_weekly_average_bikes = cur.fetchall()
-    
-            
-    except:
-        print("Error in data
-    
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-def query_hourly_average(user_station, user_weekday):
-    conn = lite.connect(
-        'C:/Users/Connor Fitzmaurice/Documents/COMP30670/SoftwareProject/ProjectCode/dublinbikes_database.db')
-    
-    try:
-        with conn:
-        cur = conn.cursor()
-
-        #  Average hourly bikes and stands for all stations for one week
-        cur.execute(
-             "SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages")
-        stations_hourly_average_bikes = cur.fetchall()
-        
-    except:
-        print("Error in weekly query")
-    conn.commit()  # Commit dtatbase changes
     cur.close()
     conn.close()
