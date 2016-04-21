@@ -123,20 +123,7 @@ def query_weekly_average(user_station, user_weekday):
                  "SELECT Station_number, Weekday, Average_Available_bikes, Average_Available_Bike_stands FROM Weekly_Averages")
             stations_weekly_average_bikes = cur.fetchall()
     
-            # Version 1, average weekly bikes ands stands just for a specific station on 1 day
-            # cur.execute(
-            #      "SELECT Station_number, Weekday, Average_Available_bikes, Average_Available_Bike_stands FROM Weekly_Averages WHERE  Station_number = (?) and  Weekday = (?)", (user_station,user_weekday))
-            # specific_day_specific_station_weekly_average_bikes = cur.fetchone()
-    
-            #  Version 2, average weekly bikes ands stands for specific day grouped for all stations
-            # cur.execute(
-            #     "SELECT Station_number, Weekday, Average_Available_bikes, Average_Available_Bike_stands FROM Weekly_Averages WHERE Weekday = (?)",
-            #     (user_weekday,))
-            # specific_day_stations_weekly_average_bikes = cur.fetchall()
-    
-            # Version 3, average weekly bikes for each each day for one station
-            #     cur.execute("SELECT Station_number, Weekday, Average_Available_bikes, Average_Available_Bike_stands FROM Weekly_Averages WHERE Station_number = (?)", (user_station,))
-            # stations_weekly_average_bikes = cur.fetchall()
+            
     except:
         print("Error in data
     
