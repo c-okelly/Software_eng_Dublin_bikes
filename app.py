@@ -75,7 +75,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 @app.route('/')
 @crossdomain(origin='*') # Allow crossdomain request for this funciton any origin
 def root():
-    return render_template('dublin_bikes.html', MAPS_APIKEY=("MAPS_APIKEY"))
+    return "hello"#render_template('website/dublin_bikes.html', MAPS_APIKEY=("MAPS_APIKEY"))
 
 
 @app.route("/Latest_Data")
