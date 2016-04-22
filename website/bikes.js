@@ -75,7 +75,14 @@ function initMap() {
             else {
                     $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
                     json = data;
-                    generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
+                    // Check that a result has been returned.
+                    if (jQuery.isEmptyObject(json["Station_info"])){
+                        alert("Sorry the database contains no information for the requested time. Please try changing it slightly.");
+                    }
+                    else{
+                        generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);    
+                    }
+                    
                 })
             }
         }
