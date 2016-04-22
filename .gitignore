@@ -4,6 +4,7 @@ __pycache__/
 
 # Ignore test database
 dublinbikes_test_database.db
+dublinbikes_database.db
 
 # Ignore Data Directory
 Data/

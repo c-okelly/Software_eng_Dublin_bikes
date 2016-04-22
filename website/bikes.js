@@ -64,9 +64,10 @@ function initMap() {
             
             // Genearte timestamp
             var timestamp = parseInt(year + month + day + hour + minute);
+//            console.log(timestamp);
             // Check times stamp is within range we have in db
             // Why have i used two if statement? Because I am tierd of thinking.....
-            if (20163090000>timestamp) { 
+            if (201603090000>timestamp) { 
                 alert("Please choose a date between the range 9th March and 20th April");
             }
             else if (timestamp>201604220000) {
@@ -75,6 +76,7 @@ function initMap() {
             else {
                     $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
                     json = data;
+//                        console.log(json);
                     // Check that a result has been returned.
                     if (jQuery.isEmptyObject(json["Station_info"])){
                         alert("Sorry the database contains no information for the requested time. Please try changing it slightly.");

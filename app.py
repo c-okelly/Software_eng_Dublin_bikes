@@ -8,7 +8,7 @@ from datetime import timedelta
 
 # Create our flask app. Static files are served from 'static' directory
 app = Flask(__name__)
-DATABASE = 'dublinbikes_test_database.db'
+DATABASE = 'dublinbikes_database.db'
 MAPS_APIKEY = 'AIzaSyBy8wTZI8iqNkK5QcB2XPusZl03xvcGV9c'
 def connect_to_database():
     return sqlite3.connect(DATABASE)
