@@ -73,6 +73,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 # this route simply serves base html file
 @app.route('/')
+@crossdomain(origin='*') # Allow crossdomain request for this funciton any origin
 def root():
     return render_template('dublin_bikes.html', MAPS_APIKEY=("MAPS_APIKEY"))
 
