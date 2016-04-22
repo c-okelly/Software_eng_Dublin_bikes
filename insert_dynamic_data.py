@@ -5,14 +5,14 @@ import time
 import os
 from Call_api_and_save_disk import time_stamp_and_save_api_call_to_file
 
-def run_every_x_minutes_database(database_path, data_directory, repeat_every_x_mins=1):
+def run_every_x_minutes_database(database_path, data_directory="Data", repeat_every_x_mins=1):
 
     # Set wait time to x mins mins 0.25 seconds to account for program run time.
     wait_time = ((60 * repeat_every_x_mins)-0.25)
 
     try:
         while True:
-            latest_dynamic_data = time_stamp_and_save_api_call_to_file()
+            latest_dynamic_data = time_stamp_and_save_api_call_to_file(directory_to_save_to=data_directory)
             import_dynamic_data(database_path, latest_dynamic_data)
             # Time stamp print
             time_of_day = (time.strftime("%Y%m%d%H%M", time.localtime()))
