@@ -109,7 +109,7 @@ def get_stations():
     for i in range(0, len(live_stations)):
         live_data[i] = {"Timestamp":live_stations[i][0], "Station_no":live_stations[i][1], "No_bike_stands":live_stations[i][2],"Available_bikes":live_stations[i][3],"Available_bike_stands":live_stations[i][4]}
 
-    total_ob = {"Static_data":stations_dict, "Live_info":live_data}
+    total_ob = {"Static_data":stations_dict, "Station_info":live_data}
     json_array = json.dumps(total_ob)
 
     return json_array
@@ -143,7 +143,7 @@ def Hist_call(Timestamp):
         # Add no stations varailbe to dict
         stations_dict["no_stations"] = no_stations
 
-        total_ob = {"Historical data": Hist_dict, "Static Data": stations_dict}
+        total_ob = {"Historical data": Hist_dict, "Station_info": stations_dict}
         json_array = json.dumps(total_ob)
 
         return json_array
@@ -176,7 +176,7 @@ def Hist_hourly_call(day_of_week,hour):
         # Add no stations varailbe to dict
         stations_dict["no_stations"] = no_stations
 
-        total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
+        total_ob = {"Hourly data": Hour_dict, "Station_info": stations_dict}
         json_array = json.dumps(total_ob)
 
         return json_array

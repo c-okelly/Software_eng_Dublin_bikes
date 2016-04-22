@@ -33,7 +33,9 @@ function initMap() {
         if (data_type === "1"){
             $.getJSON("http://127.0.0.1:5000/Latest_Data", function(data) {
             json = data;
-            console.log(data);
+                console.log(data["Static_data"][0]);
+                generate_markers_and_info_bubbles(data["Static_data"],data["Live_info"]);
+            
             })
         }
         // Historical Load
@@ -62,38 +64,33 @@ function initMap() {
             console.log(data);
             })
         }
-        
-
-        
-    //Get data based on user request
-        
-    var data_list = [['first window',53.3498,-6.2603,.3],["second window",53.3498,-6.20,.8]];
-        
-    // Input data into map
-    generate_markers_for_range(data_list);
-    
-    
-    
 };
 
+// static_data, info_bubble_content
 
-var generate_markers_for_range = function(data_list) {
-    for (i=0;i<2;i++) {
+var generate_markers_and_info_bubbles = function(static_data, info_bubble_content) {
+    var no_stations = static_data["no_stations"]
+    console.log(no_stations);
+    
+    for (i=0;i<100;i++) {
+        alert(i);
         
         marker = new google.maps.Marker({
             map: map,
             icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
             draggable: false,
             animation: google.maps.Animation.DROP,
-            position: {lat: data_list[i][1], lng: data_list[i][2]}
+            position: {lat: static_data[i]["Lat"], lng: static_data[i]["Long"]}
             });
+        
+        var info_content = '<div class="phoneytext"><p><br><br> hi</p></div>';
         
         infoBubble = new InfoBubble({
               map: map,
-              content: '<div class="phoneytext"><p><br><br>'+data_list[i][0]+'</p></div>',
+              content: info_content,
               shadowStyle: 1,
               padding: 0,
-              backgroundColor: 'rgb(20,99,99)',
+              backgroundColor: 'yellow',
               borderRadius: 4,
               arrowSize: 10,
               borderWidth: 1,
@@ -104,9 +101,10 @@ var generate_markers_for_range = function(data_list) {
               backgroundClassName: 'phoney',
               arrowStyle: 2
             });
+        
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
-                    infoBubble.setContent(data_list[i][0]);
+                    infoBubble.setContent(static_data[i][0]);
                     infoBubble.open(map, marker);
                 }
             })(marker, i));
