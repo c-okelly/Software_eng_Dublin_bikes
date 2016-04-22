@@ -33,8 +33,8 @@ function initMap() {
         if (data_type === "1"){
             $.getJSON("http://127.0.0.1:5000/Latest_Data", function(data) {
             json = data;
-                console.log(data["Static_data"][0]);
-                generate_markers_and_info_bubbles(data["Static_data"],data["Live_info"]);
+                console.log(data["Station_info"][0]);
+                generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
             
             })
         }
@@ -70,24 +70,35 @@ function initMap() {
 
 var generate_markers_and_info_bubbles = function(static_data, info_bubble_content) {
     var no_stations = static_data["no_stations"]
-    console.log(no_stations);
+    var green_icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+    var yellow_icon = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+    var red_icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+    var content_array = '<div class="phoneytext"><p>> hi</p></div>';
     
-    for (i=0;i<100;i++) {
+    for (i=0;i<no_stations;i++) {
         alert(i);
         
+        // Set percent full
+        var percent_full = (info_bubble_content[i]["Available_bikes"] / info_bubble_content[i]["No_bike_stands"]);
+        // Set icon of current station
+        var icon_set = "";
+        if (percent_full >= 0.6) {icon_set =green_icon;}
+        else if (percent_full >= 0.2) {icon_set =yellow_icon;}
+        else if (percent_full <= 0.2) {icon_set =red_icon;}
+        // Create marker and place
         marker = new google.maps.Marker({
             map: map,
-            icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            icon: icon_set,
             draggable: false,
             animation: google.maps.Animation.DROP,
             position: {lat: static_data[i]["Lat"], lng: static_data[i]["Long"]}
             });
-        
-        var info_content = '<div class="phoneytext"><p><br><br> hi</p></div>';
-        
+    
+        // Create general info bubble
         infoBubble = new InfoBubble({
               map: map,
-              content: info_content,
+              content: "Blank",
               shadowStyle: 1,
               padding: 0,
               backgroundColor: 'yellow',
@@ -101,10 +112,10 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
               backgroundClassName: 'phoney',
               arrowStyle: 2
             });
-        
+            // On click load info into info bubble and open
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
-                    infoBubble.setContent(static_data[i][0]);
+                    infoBubble.setContent(content_array);
                     infoBubble.open(map, marker);
                 }
             })(marker, i));
