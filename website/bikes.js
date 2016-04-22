@@ -1,7 +1,22 @@
 $(document).ready(function () {
     $(".sub_button").click(function () {        
         dublin_city_coord = [53.3498, -6.2603]
-        reload_map(dublin_city_coord);
+        
+        $('.pressue').change(function () {
+        
+            if ($("input[name=req_type]:checked").val() === "1") 
+            {$('.current_load').fadeIn();}
+        else {
+            $('.current_load').fadeOut();
+        }
+    });
+        
+        if ($("input[name=req_type]:checked").val() === undefined) {
+            alert("Pleaes choose a request type");
+        }
+        else{
+         reload_map(dublin_city_coord);   
+        }
         
         
     });
@@ -47,13 +62,22 @@ function initMap() {
             var hour = $("#hist_load_hour").val();
             var minute = $("#hist_load_min").val();
             
+            // Genearte timestamp
             var timestamp = parseInt(year + month + day + hour + minute);
-            alert(timestamp);
-            
-            $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
-                json = data;
-                generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
-            })
+            // Check times stamp is within range we have in db
+            // Why have i used two if statement? Because I am tierd of thinking.....
+            if (20163090000>timestamp) { 
+                alert("Please choose a date between the range 9th March and 20th April");
+            }
+            else if (timestamp>201604220000) {
+                alert("Please choose a date between the range 9th March and 20th April");
+            }
+            else {
+                    $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
+                    json = data;
+                    generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
+                })
+            }
         }
         // Historical hourly avaerage
         else if (data_type === "3"){
@@ -79,7 +103,6 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
     var content_array_live = []; 
     
     for (i=0;i<no_stations;i++) {
-        alert(i);
         
         // Set percent full
         var percent_full = (info_bubble_content[i]["Available_bikes"] / info_bubble_content[i]["No_bike_stands"]);

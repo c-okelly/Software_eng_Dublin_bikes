@@ -158,19 +158,18 @@
                                 <table class="u-full-width">
                                     <tr class="spaced">
                                         <td>
-                                            <label for="search_bar">Type of request</label>
-                                            <input type="radio" name="req_type" value="1"> Current Data &nbsp;&nbsp;
-                                            <input type="radio" name="req_type" value="2"> Historical Load &nbsp;&nbsp;
-                                            <input type="radio" name="req_type" value="3"> Historical hourly average load &nbsp;&nbsp;
+                                            <label for="search_bar">Type of request - Some request may take a second or two. Please wait.</label>
                                         </td>
                                     </tr>
                                     <tr class="spaced">
                                         <td class="current_load">
-                                            Just click submit to get the result!
+                                            <input type="radio" name="req_type" value="1"> Current Data &nbsp;&nbsp;<br>
+                                            Just click submit to get the result!<br><br>
                                         </td>
                                     </tr>
                                     <tr class="spaced">
                                         <td class="histroical_load">
+                                            <input type="radio" name="req_type" value="2"> Historical Load &nbsp;&nbsp;<br>
                                             Year: <select>
                                             <option id="hist_load_year" Value="2016">2016</option>
                                             </select>
@@ -178,8 +177,8 @@
 <!--
                                                   <option Value="1">January
                                                   <option Value="2">Febuary
-                                                  <option Value="3">March
 -->
+                                                  <option Value="3">March
                                                   <option Value="04">April
 <!--                                                  <option Value="05">May-->
 <!--
@@ -317,11 +316,13 @@
                                                     <option Value="59">59
                                                     <option Value="60">60
                                             </select>
-
-                                        </td>
+                                                
+                                        <br><br></td>
                                     </tr>
+                                    
                                     <tr class="spaced">
                                         <td class="histroical_hourly_average_load">
+                                            <input type="radio" name="req_type" value="3"> Historical hourly average load &nbsp;&nbsp;<br>
                                             Day of the week <select id="hist_hour_day" name="Month">
                                             <option Value="Mon">Monday</option>
                                             <option Value="Tue">Tuesday</option>
