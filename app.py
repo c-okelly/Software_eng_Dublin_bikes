@@ -143,7 +143,7 @@ def Hist_call(Timestamp):
         # Add no stations varailbe to dict
         stations_dict["no_stations"] = no_stations
 
-        total_ob = {"Historical data": Hist_dict, "Station_info": stations_dict}
+        total_ob = {"Static_data": stations_dict, "Station_info": Hist_dict}
         json_array = json.dumps(total_ob)
 
         return json_array
@@ -154,14 +154,16 @@ def Hist_hourly_call(day_of_week,hour):
         conn = get_db()
         cur = conn.cursor()
         Hourarray = []
-        hourrows = cur.execute(("SELECT Station_number, Weekday, Hour, Average_Available_bikes, Average_Available_bike_stands FROM Daily_Averages where Weekday = (?) and Hour = (?)"),(day_of_week,hour))
+        hourrows = cur.execute(("SELECT Station_number, Average_Available_bikes, Average_Available_bike_stands, Weekday, Hour FROM Daily_Averages where Weekday = (?) and Hour = (?)"),(day_of_week,hour))
         for row in hourrows:
             Hourarray.append(row)
+        # print(row)
 
         # Turn list into
-        Hour_dict = {}
+        hourly_average_dict = {}
         for i in range(0, len(Hourarray)):
-            Hour_dict[i] = Hourarray[i]
+            total_stands = Hourarray[i][1] + Hourarray[i][2]
+            hourly_average_dict[i] = {"Station_no":Hourarray[i][0], "No_bike_stands":total_stands,"Available_bikes":Hourarray[i][1],"Available_bike_stands":Hourarray[i][2],"Day_the_week":Hourarray[i][3], "Hour":Hourarray[i][4]}
 
         static_stations = []
         rows = cur.execute("SELECT * from Static_Data;")
@@ -176,7 +178,7 @@ def Hist_hourly_call(day_of_week,hour):
         # Add no stations varailbe to dict
         stations_dict["no_stations"] = no_stations
 
-        total_ob = {"Hourly data": Hour_dict, "Station_info": stations_dict}
+        total_ob = {"Static_data": stations_dict, "Station_info": hourly_average_dict}
         json_array = json.dumps(total_ob)
 
         return json_array
