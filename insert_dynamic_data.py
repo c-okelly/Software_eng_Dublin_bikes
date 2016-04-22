@@ -3,6 +3,7 @@ import urllib.request as request
 import json
 import time
 import os
+from Call_api_and_save_disk import time_stamp_and_save_api_call_to_file
 
 def run_every_x_minutes_database(database_path, data_directory, repeat_every_x_mins=1):
 
@@ -10,11 +11,13 @@ def run_every_x_minutes_database(database_path, data_directory, repeat_every_x_m
     wait_time = ((60 * repeat_every_x_mins)-0.25)
 
     try:
-    	latest_dynamic_data = time_stamp_and_save_api_call_to_file()
-        import_dynamic_data(database_path, latest_dynamic_data)
-        time.sleep(wait_time)
+        while True:
+            latest_dynamic_data = time_stamp_and_save_api_call_to_file()
+            import_dynamic_data(database_path, latest_dynamic_data)
+            time.sleep(wait_time)
     except:
-        print("Error Importing data")
+        time_of_day = (time.strftime("%Y%m%d%H%M", time.localtime()))
+        print("Error Importing data at " + time_of_day)
         time.sleep(15)
 
 def import_dynamic_data(database_path, dynamic_data):
@@ -30,9 +33,9 @@ def import_dynamic_data(database_path, dynamic_data):
             if station_no != 50:
                 try:
                     station_index = dynamic_data[station_no]
-                    print("loop1", station_index)
+                    # print("loop1", station_index)
                     #print('\n')
-                    print(station_no)
+                    # print(station_no)
                     cur.execute("INSERT OR IGNORE INTO Dynamic_Data(Station_number, Timestamp, Last_update, Weekday, Status, Bike_stands, Available_bike_stands, Available_bikes) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
                                (station_no, station_index['time_stamp'], station_index['last_update'],station_index['week_day'], station_index['status'], station_index['bike_stands'],station_index['available_bike_stands'],
                               station_index['available_bikes']))
@@ -42,3 +45,9 @@ def import_dynamic_data(database_path, dynamic_data):
     conn.commit() #Redundant here
     cur.close()
     conn.close()
+
+
+if __name__ == '__main__':
+    print("Starting")
+    run_every_x_minutes_database("dublinbikes_test_database.db","Data")
+    print("Something went wrong")
