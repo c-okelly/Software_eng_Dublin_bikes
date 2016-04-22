@@ -171,14 +171,17 @@
                                     </tr>
                                     <tr class="spaced">
                                         <td class="histroical_load">
-                                            Month <select name="Month">
+                                            Year: <select>
+                                            <option id="hist_load_year" Value="2016">2016</option>
+                                            </select>
+                                            Month <select id="hist_load_month" name="Month">
 <!--
                                                   <option Value="1">January
                                                   <option Value="2">Febuary
                                                   <option Value="3">March
-                                                  <option Value="4">April
 -->
-                                                  <option Value="5">May
+                                                  <option Value="04">April
+<!--                                                  <option Value="05">May-->
 <!--
                                                   <option Value="6">June
                                                   <option Value="7">July
@@ -189,71 +192,69 @@
                                                   <option Value="12">December
 -->
                                                 </select>
-                                              Date <select name="DateG">
-                                                      <option Value="1">1
-                                                      <option Value="2">2
-                                                      <option Value="3">3
-                                                      <option Value="4">4
-                                                      <option Value="5">5
-                                                      <option Value="6">6
-                                                      <option Value="7">7
-                                                      <option Value="8">8
-                                                      <option Value="9">9
-                                                      <option Value="10">10
-                                                      <option Value="11">11
-                                                      <option Value="12">12
-                                                      <option Value="13">13
-                                                      <option Value="14">14
-                                                      <option Value="15">15
-                                                      <option Value="16">16
-                                                      <option Value="17">17
-                                                      <option Value="18">18
-                                                      <option Value="19">19
-                                                      <option Value="20">20
-                                                      <option Value="21">21
-                                                      <option Value="22">22
-                                                      <option Value="23">23
-                                                      <option Value="24">24
-                                                      <option Value="25">25
-                                                      <option Value="26">26
-                                                      <option Value="27">27
-                                                      <option Value="28">28
-                                                      <option Value="29">29
-                                                      <option Value="30">30
-                                                      <option Value="31">31
+                                              Date <select id="hist_load_date" name="DateG">
+                                                      <option Value="01">1</option>
+                                                      <option Value="02">2</option>
+                                                      <option Value="03">3</option>
+                                                      <option Value="04">4</option>
+                                                      <option Value="05">5</option>
+                                                      <option Value="06">6</option>
+                                                      <option Value="07">7</option>
+                                                      <option Value="08">8</option>
+                                                      <option Value="09">9</option>
+                                                      <option Value="10">10</option>
+                                                      <option Value="11">11</option>
+                                                      <option Value="12">12</option>
+                                                      <option Value="13">13</option>
+                                                      <option Value="14">14</option>
+                                                      <option Value="15">15</option>
+                                                      <option Value="16">16</option>
+                                                      <option Value="17">17</option>
+                                                      <option Value="18">18</option>
+                                                      <option Value="19">19</option>
+                                                      <option Value="20">20</option>
+                                                      <option Value="21">21</option>
+                                                      <option Value="22">22</option>
+                                                      <option Value="23">23</option>
+                                                      <option Value="24">24</option>
+                                                      <option Value="25">25</option>
+                                                      <option Value="26">26</option>
+                                                      <option Value="27">27</option>
+                                                      <option Value="28">28</option>
+                                                      <option Value="29">29</option>
+                                                      <option Value="30">30</option>
+                                                      <option Value="31">31</option>
                                                 </select>
-                                              Year: <select>
-                                                    <option Value="2016">2016
-                                            </select>
-                                            Hour: <select>
-                                                    <option Value="00">00
-                                                    <option Value="01">01
-                                                    <option Value="02">02
-                                                    <option Value="03">03
-                                                    <option Value="04">04
-                                                    <option Value="05">05
-                                                    <option Value="06">06
-                                                    <option Value="07">07
-                                                    <option Value="08">08
-                                                    <option Value="09">09
-                                                    <option Value="10">10
-                                                    <option Value="11">11
-                                                    <option Value="12">12
-                                                    <option Value="13">13
-                                                    <option Value="14">14
-                                                    <option Value="15">15
-                                                    <option Value="16">16
-                                                    <option Value="17">17
-                                                    <option Value="18">18
-                                                    <option Value="19">19
-                                                    <option Value="20">20
-                                                    <option Value="21">21
-                                                    <option Value="22">22
-                                                    <option Value="23">23
-                                                    <option Value="24">24
+
+                                            Hour: <select id="hist_load_hour">
+                                                    <option Value="00">00</option>
+                                                    <option Value="01">01</option>
+                                                    <option Value="02">02</option>
+                                                    <option Value="03">03</option>
+                                                    <option Value="04">04</option>
+                                                    <option Value="05">05</option>
+                                                    <option Value="06">06</option>
+                                                    <option Value="07">07</option>
+                                                    <option Value="08">08</option>
+                                                    <option Value="09">09</option>
+                                                    <option Value="10">10</option>
+                                                    <option Value="11">11</option>
+                                                    <option Value="12">12</option>
+                                                    <option Value="13">13</option>
+                                                    <option Value="14">14</option>
+                                                    <option Value="15">15</option>
+                                                    <option Value="16">16</option>
+                                                    <option Value="17">17</option>
+                                                    <option Value="18">18</option>
+                                                    <option Value="19">19</option>
+                                                    <option Value="20">20</option>
+                                                    <option Value="21">21</option>
+                                                    <option Value="22">22</option>
+                                                    <option Value="23">23</option>
+                                                    <option Value="24">24</option>
                                             </select>
                                             
-                                            Minute: <select>
+                                            Minute: <select id="hist_load_min">
                                                     <option Value="00">00
                                                     <option Value="01">01
                                                     <option Value="02">02

@@ -37,8 +37,15 @@ function initMap() {
             })
         }
         // Historical Load
-        else if (data_type === "2"){
-            var timestamp = String(201604201724);
+        else if (data_type === "2"){ 
+            var year = $("#hist_load_year").val();
+            var month =$("#hist_load_month").val();
+            var day = $("#hist_load_date").val();
+            var hour = $("#hist_load_hour").val();
+            var minute = $("#hist_load_min").val();
+            
+            var timestamp = parseInt(year + month + day + hour + minute);
+            alert(timestamp);
             
             $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
             json = data;
