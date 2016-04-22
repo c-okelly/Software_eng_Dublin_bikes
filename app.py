@@ -96,14 +96,14 @@ def get_stations():
 
     # Live info
     live_stations = []
-    live_rows = cur.execute("SELECT Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
+    live_rows = cur.execute("SELECT Timestamp, Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
     for i in live_rows:
         live_stations.append(i)
 
     # Turn list into
     live_data = {}
     for i in range(0, len(live_stations)):
-        live_data[i] = {"Station_no":live_stations[i][0], "No_bike_stands":live_stations[i][1],"Available_bikes":live_stations[i][2],"Available_bike_stands":live_stations[i][3]}
+        live_data[i] = {"Timestamp":live_stations[i][0], "Station_no":live_stations[i][1], "No_bike_stands":live_stations[i][2],"Available_bikes":live_stations[i][3],"Available_bike_stands":live_stations[i][4]}
 
     total_ob = {"Static_data":stations_dict, "Live_info":live_data}
     json_array = json.dumps(total_ob)
