@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $(".sub_button").click(function () {        
-        reload_map();
+        dublin_city_coord = [53.3498, -6.2603]
+        reload_map(dublin_city_coord);
         
         
     });
@@ -21,9 +22,9 @@ function initMap() {
 // Fucntion that will load in Dublin bikes load markers depending on SQL data
 
     // Reload map
-    var reload_map = function() {
+    var reload_map = function(city_coord) {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 53.3498, lng: -6.2603},
+      center: {lat: city_coord[0], lng: city_coord[1]},
       zoom: 13
     });
         // Determine call type and collect correct data
@@ -32,8 +33,8 @@ function initMap() {
         // Current data call
         if (data_type === "1"){
             $.getJSON("http://127.0.0.1:5000/Latest_Data", function(data) {
-            json = data;
-                console.log(data["Station_info"][0]);
+                json = data;
+//                console.log(data["Station_info"][0]);
                 generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
             
             })
@@ -50,8 +51,8 @@ function initMap() {
             alert(timestamp);
             
             $.getJSON("http://127.0.0.1:5000/Historical_Call/"+timestamp, function(data) {
-            json = data;
-            console.log(data);
+                json = data;
+                generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
             })
         }
         // Historical hourly avaerage
@@ -60,8 +61,9 @@ function initMap() {
             var hour_day =  $("#hist_hour_hour").val();
             // "+day_week+"/"+hour_day
             $.getJSON("http://127.0.0.1:5000/Hourly_call/"+day_week+"/"+hour_day, function(data) {
-            json = data;
-            console.log(data);
+                json = data;
+                console.log(data["Station_info"]);
+                generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
             })
         }
 };
@@ -69,12 +71,12 @@ function initMap() {
 // static_data, info_bubble_content
 
 var generate_markers_and_info_bubbles = function(static_data, info_bubble_content) {
-    var no_stations = static_data["no_stations"]
+    var no_stations = static_data["no_stations"];
     var green_icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
     var yellow_icon = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
     var red_icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
 
-    var content_array = '<div class="phoneytext"><p>> hi</p></div>';
+    var content_array_live = []; 
     
     for (i=0;i<no_stations;i++) {
         alert(i);
@@ -94,28 +96,41 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
             animation: google.maps.Animation.DROP,
             position: {lat: static_data[i]["Lat"], lng: static_data[i]["Long"]}
             });
-    
+        
+        // Generate content
+        var content_for_station = '<div><img src="images/Dublin_bikes_logo.jpg"  style="width:160px;">\
+                        <p style="color:white; align:left;">\
+                        Info for station no '+info_bubble_content[i]["Station_no"]+'<br>\
+                        There are a total of '+info_bubble_content[i]["No_bike_stands"]+' bike stands<br>\
+                        There are '+info_bubble_content[i]["Available_bikes"]+' bikes availiable<br>\
+                        There are '+info_bubble_content[i]["Available_bike_stands"]+' bikes stands availiable\
+                        \</p></div>';
+        
+        content_array_live.push(content_for_station);
+        
         // Create general info bubble
         infoBubble = new InfoBubble({
-              map: map,
-              content: "Blank",
-              shadowStyle: 1,
-              padding: 0,
-              backgroundColor: 'yellow',
-              borderRadius: 4,
-              arrowSize: 10,
-              borderWidth: 1,
-              borderColor: '#2c2c2c',
-              disableAutoPan: true,
-              hideCloseButton: false,
-              arrowPosition: 30,
-              backgroundClassName: 'phoney',
-              arrowStyle: 2
+            map: map,
+            content: "Blank",
+            shadowStyle: 1,
+            padding: 0,
+            backgroundColor: '#084C55',
+            borderRadius: 0,
+            arrowSize: 20,
+            borderWidth: 1,
+            borderColor: '#2c2c2c',
+            disableAutoPan: true,
+            hideCloseButton: false,
+            arrowPosition: 30,
+            maxWidth: 200,
+            maxHeight: 140,
+            backgroundClassName: '',
+            arrowStyle: 2
             });
             // On click load info into info bubble and open
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
-                    infoBubble.setContent(content_array);
+                    infoBubble.setContent(content_array_live[i]);
                     infoBubble.open(map, marker);
                 }
             })(marker, i));
