@@ -89,10 +89,14 @@ def get_stations():
     for row in rows:
         static_stations.append(row)
         
-     # Turn list into
+    # Turn list into
+    no_stations = len(static_stations)
     stations_dict = {}
     for i in range(0, len(static_stations)):
         stations_dict[i] = {"Station_no":static_stations[i][0],"Station_name":static_stations[i][1],"Station_address":static_stations[i][2],"Lat":static_stations[i][3],"Long":static_stations[i][4]}
+    # Add no stations varailbe to dict
+    stations_dict["no_stations"] = no_stations
+
 
     # Live info
     live_stations = []
@@ -126,15 +130,18 @@ def Hist_call(Timestamp):
         for i in range(0, len(histarray)):
             Hist_dict[i] = {"Station_no":histarray[i][0], "No_bike_stands":histarray[i][1],"Available_bikes":histarray[i][2],"Available_bike_stands":histarray[i][3]}
 
-        stations = []
+        static_stations = []
         rows = cur.execute("SELECT * from Static_Data;")
         for row in rows:
-            stations.append(row)
+            static_stations.append(row)
 
         # Turn list into
+        no_stations = len(static_stations)
         stations_dict = {}
-        for i in range(0, len(stations)):
-            stations_dict[i] = {"Station_no":stations[i][0],"Station_name":stations[i][1],"Station_address":stations[i][2],"Lat":stations[i][3],"Long":stations[i][4]}
+        for i in range(0, len(static_stations)):
+            stations_dict[i] = {"Station_no":static_stations[i][0],"Station_name":static_stations[i][1],"Station_address":static_stations[i][2],"Lat":static_stations[i][3],"Long":static_stations[i][4]}
+        # Add no stations varailbe to dict
+        stations_dict["no_stations"] = no_stations
 
         total_ob = {"Historical data": Hist_dict, "Static Data": stations_dict}
         json_array = json.dumps(total_ob)
@@ -156,15 +163,18 @@ def Hist_hourly_call(day_of_week,hour):
         for i in range(0, len(Hourarray)):
             Hour_dict[i] = Hourarray[i]
 
-        stations = []
+        static_stations = []
         rows = cur.execute("SELECT * from Static_Data;")
         for row in rows:
-            stations.append(row)
+            static_stations.append(row)
 
-         # Turn list into
+        ## Turn list into
+        no_stations = len(static_stations)
         stations_dict = {}
-        for i in range(0, len(stations)):
-            stations_dict[i] = {"Station_no":stations[i][0],"Station_name":stations[i][1],"Station_address":stations[i][2],"Lat":stations[i][3],"Long":stations[i][4]}
+        for i in range(0, len(static_stations)):
+            stations_dict[i] = {"Station_no":static_stations[i][0],"Station_name":static_stations[i][1],"Station_address":static_stations[i][2],"Lat":static_stations[i][3],"Long":static_stations[i][4]}
+        # Add no stations varailbe to dict
+        stations_dict["no_stations"] = no_stations
 
         total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
         json_array = json.dumps(total_ob)
