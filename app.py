@@ -184,8 +184,6 @@ def Hist_hourly_call(day_of_week,hour):
         return json_array
 
 
-
-
-##conn = get_db()
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
+    #app.run(debug=True)
