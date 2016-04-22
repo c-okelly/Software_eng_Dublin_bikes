@@ -62,7 +62,7 @@ function initMap() {
             // "+day_week+"/"+hour_day
             $.getJSON("http://127.0.0.1:5000/Hourly_call/"+day_week+"/"+hour_day, function(data) {
                 json = data;
-                console.log(data["Station_info"]);
+//                console.log(data["Station_info"]);
                 generate_markers_and_info_bubbles(data["Static_data"],data["Station_info"]);
             })
         }
@@ -101,9 +101,9 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
         var content_for_station = '<div><img src="images/Dublin_bikes_logo.jpg"  style="width:160px;">\
                         <p style="color:white; align:left;">\
                         Info for station no '+info_bubble_content[i]["Station_no"]+'<br>\
-                        There are a total of '+info_bubble_content[i]["No_bike_stands"]+' bike stands<br>\
-                        There are '+info_bubble_content[i]["Available_bikes"]+' bikes availiable<br>\
-                        There are '+info_bubble_content[i]["Available_bike_stands"]+' bikes stands availiable\
+                        There are a total of '+info_bubble_content[i]["No_bike_stands"].toFixed(0)+' bike stands<br>\
+                        There are '+info_bubble_content[i]["Available_bikes"].toFixed(1)+' bikes availiable<br>\
+                        There are '+info_bubble_content[i]["Available_bike_stands"].toFixed(1)+' bikes stands availiable\
                         \</p></div>';
         
         content_array_live.push(content_for_station);
