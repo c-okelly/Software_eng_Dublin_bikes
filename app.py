@@ -83,26 +83,27 @@ def get_stations():
     # return a list of all stations
     conn = get_db()
     cur = conn.cursor()
-    stations = []
+
+    static_stations = []
     rows = cur.execute("SELECT * from Static_Data;")
     for row in rows:
-        stations.append(row)
+        static_stations.append(row)
         
-    # Turn list into
+     # Turn list into
     stations_dict = {}
-    for i in range(0,len(stations)):
-        stations_dict[i] = stations[i]
+    for i in range(0, len(static_stations)):
+        stations_dict[i] = {"Station_no":static_stations[i][0],"Station_name":static_stations[i][1],"Station_address":static_stations[i][2],"Lat":static_stations[i][3],"Long":static_stations[i][4]}
 
     # Live info
     live_stations = []
-    live_rows = cur.execute("SELECT Station_number, Timestamp, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
+    live_rows = cur.execute("SELECT Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
     for i in live_rows:
         live_stations.append(i)
-    # print(live_stations)
 
+    # Turn list into
     live_data = {}
-    for i in range(0,len(live_stations)):
-        live_data[i] = live_stations[i]
+    for i in range(0, len(live_stations)):
+        live_data[i] = {"Station_no":live_stations[i][0], "No_bike_stands":live_stations[i][1],"Available_bikes":live_stations[i][2],"Available_bike_stands":live_stations[i][3]}
 
     total_ob = {"Static_data":stations_dict, "Live_info":live_data}
     json_array = json.dumps(total_ob)
@@ -116,14 +117,14 @@ def Hist_call(Timestamp):
         conn = get_db()
         cur = conn.cursor()
         histarray = []
-        hrows = cur.execute(("SELECT Station_number, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number"),(Timestamp,))
+        hrows = cur.execute(("SELECT Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number"),(Timestamp,))
         for row in hrows:
             histarray.append(row)
 
         # Turn list into
         Hist_dict = {}
         for i in range(0, len(histarray)):
-            Hist_dict[i] = histarray[i]
+            Hist_dict[i] = {"Station_no":histarray[i][0], "No_bike_stands":histarray[i][1],"Available_bikes":histarray[i][2],"Available_bike_stands":histarray[i][3]}
 
         stations = []
         rows = cur.execute("SELECT * from Static_Data;")
@@ -133,12 +134,7 @@ def Hist_call(Timestamp):
         # Turn list into
         stations_dict = {}
         for i in range(0, len(stations)):
-            stations_dict[i] = stations[i]
-
-
-
-
-
+            stations_dict[i] = {"Station_no":stations[i][0],"Station_name":stations[i][1],"Station_address":stations[i][2],"Lat":stations[i][3],"Long":stations[i][4]}
 
         total_ob = {"Historical data": Hist_dict, "Static Data": stations_dict}
         json_array = json.dumps(total_ob)
@@ -165,10 +161,10 @@ def Hist_hourly_call(day_of_week,hour):
         for row in rows:
             stations.append(row)
 
-        # Turn list into
+         # Turn list into
         stations_dict = {}
         for i in range(0, len(stations)):
-            stations_dict[i] = stations[i]
+            stations_dict[i] = {"Station_no":stations[i][0],"Station_name":stations[i][1],"Station_address":stations[i][2],"Lat":stations[i][3],"Long":stations[i][4]}
 
         total_ob = {"Hourly data": Hour_dict, "Static Data": stations_dict}
         json_array = json.dumps(total_ob)
