@@ -1,6 +1,8 @@
+//Focus coordiantes for city
+focus_city_coordinates = [53.3498, -6.2603]
+
 $(document).ready(function () {
     $(".sub_button").click(function () {        
-        dublin_city_coord = [53.3498, -6.2603]
         
         $('.pressue').change(function () {
         
@@ -15,7 +17,7 @@ $(document).ready(function () {
             alert("Pleaes choose a request type");
         }
         else{
-         reload_map(dublin_city_coord);   
+         reload_map(focus_city_coordinates);   
         }
         
         
@@ -28,7 +30,7 @@ $(document).ready(function () {
 var map;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 53.3498, lng: -6.2603},
+      center: {lat: focus_city_coordinates[0], lng: focus_city_coordinates[1]},
       zoom: 13
     });
 };
