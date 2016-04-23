@@ -95,3 +95,4 @@ A: 	Each marker is a station station. The color indicates percentage of bikes av
 Q:	Why is your data only limited to between the 9th of March and 20th April?
 
 A:	The data which is used by the interface was collected over this period. If the data collection is configured to run live, this range can be expanded forward. 
+
