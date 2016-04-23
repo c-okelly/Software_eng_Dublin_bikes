@@ -58,7 +58,12 @@ INSTALLATION
 * 	Excluding the above packages no more packages/modules need to be installed. All is required is that the dublin_bikes.html is ran to instanciate the flask app, collect data and provide it to the user.
 
 
-* 	To adjusted the program to work with other cities which use the JCDeaux Api, /modules/Call_api_and_save_disk.py change contract in url "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin" to city required. Also change Station_no range for city in /modules/insert_dynamic_data.py and /modules/sqllite_database.py to correct number for city requested.
+* 	To adjusted the program to work with other cities which use the JCDeaux Api, /modules/Call_api_and_save_disk.py change contract in url "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin" to city required. Also change Station_no range for city in /modules/insert_dynamic_data.py and /modules/sqllite_database.py to correct number for city requested:
+- 	def get_station_data(api_key):...
+- url = "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin"
+- Station number:  
+- for station_no in range(1,103)
+-     if station_no != 50:
 
 *  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
 
@@ -67,7 +72,7 @@ CONFIGURATION
 * 	To run the City Biking Station Interface in its current format, no configuration is required/
 
 * 	Select the request type via the uses of checkboxes and historical and hourly data for dropdown boxes for year, month, day, hour minute and  day of the week and hour respectively
-* 	
+
 ![Alt text](/ReadmeImages/1.png?raw=true "Website Image")
 
 * 	This information will be displayed via a map interface. 
