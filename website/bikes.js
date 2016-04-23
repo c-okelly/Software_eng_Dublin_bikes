@@ -1,5 +1,7 @@
 //Focus coordiantes for city
 focus_city_coordinates = [53.3498, -6.2603]
+// Set range where data is availiabe from. Start / Finish
+database_range = [201603090000, 201604220000]
 
 $(document).ready(function () {
     $(".sub_button").click(function () {        
@@ -67,12 +69,13 @@ function initMap() {
             // Genearte timestamp
             var timestamp = parseInt(year + month + day + hour + minute);
 //            console.log(timestamp);
+            
             // Check times stamp is within range we have in db
             // Why have i used two if statement? Because I am tierd of thinking.....
-            if (201603090000>timestamp) { 
+            if (database_range[0]>timestamp) { 
                 alert("Please choose a date between the range 9th March and 20th April");
             }
-            else if (timestamp>201604220000) {
+            else if (timestamp>database_range[1]) {
                 alert("Please choose a date between the range 9th March and 20th April");
             }
             else {
