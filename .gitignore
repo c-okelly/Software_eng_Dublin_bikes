@@ -8,3 +8,6 @@ dublinbikes_database.db
 
 # Ignore Data Directory
 Data/
+
+#test ignore website
+website/
