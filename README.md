@@ -68,7 +68,7 @@ CONFIGURATION
 
 * 	Select the request type via the uses of checkboxes and historical and hourly data for dropdown boxes for year, month, day, hour minute and  day of the week and hour respectively
 * 	
-![Alt text](/ReadmeImages/WebsiteMockup.png?raw=true "Website Image")
+![Alt text](/ReadmeImages/1.png?raw=true "Website Image")
 
 * 	This information will be displayed via a map interface. 
 
