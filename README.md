@@ -16,6 +16,7 @@ CONTENTS OF THIS FILE
  * Requirements
  * Recommended modules
  * Installation
+ * Running the program
  * Configuration
  * FAQ
  * Maintainers
@@ -74,11 +75,27 @@ INSTALLATION
 
 *  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
 
+
+Running the program
+-----------------
+* 	To run the program just complete the following steps.
+
+	1. Run master.py. 	
+	This will generate current data by calling from the the api.
+
+	2. Run app.py.		
+	This will launch flask and have a server ready for date request from the webpage
+
+	3. Open dublin_bikes.html and make the required request.
+
+
 CONFIGURATION
 -----------------
 * 	To run the City Biking Station Interface in its current format, no configuration is required/
 
 * 	Select the request type via the uses of checkboxes and historical and hourly data for dropdown boxes for year, month, day, hour minute and  day of the week and hour respectively
+
+* 	To change the range of available data in the database change the variable “database_range = [start, finish]” on line 4 in bikes.js
 
 ![Alt text](/ReadmeImages/1.png?raw=true "Website Image")
 
