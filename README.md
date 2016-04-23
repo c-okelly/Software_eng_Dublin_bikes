@@ -6,7 +6,7 @@ Connor Fitzmaurice
 Shane Kenny
 Conor O' Kelly
 
-The goal of this program is to provide an web based interface to users through which they can determine available bike and available bike stands for stations at the current time or at at given historical timestamp. It will try to predict the chances of bikes and stands being available in stations by providing hourly averages.  It does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
+The goal of this program is to provide a web based interface to users through which they can determine available bike and available bike stands for stations at the current time or at at given historical timestamp. It will try to predict the chances of bikes and stands being available in stations by providing hourly averages.  It does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
 
 
 CONTENTS OF THIS FILE
@@ -19,7 +19,6 @@ CONTENTS OF THIS FILE
  * Running the program
  * Configuration
  * FAQ
- * Maintainers
  
 Introduction
 --------------------
@@ -30,7 +29,7 @@ The 'City Biking Station Interface' program displays a website which allows user
 ![Alt text](/ReadmeImages/WebsiteMockup.png?raw=true "Website Mockup")
 
 
-The 'City Biking Station Interface' program is designed with robustness and modularity in mind. As such, while currently in use with the JCDeaux API for the Dublin Bikes programme, it can be adapted to work with other city bike schemes which are managed using the JCDeaux. It also currently provides data collected during a defined period. With moderate adjustments and hardware support, the 'City Biking Station Interface' can be adapted to run in a live state with data constantly being collected and the hourly averages for stations being recalculated. This would have applications such as users wanting to see how the Bike scheme is impacted by factors such as seasons, bank holidays or price hikes.
+The 'City Biking Station Interface' program is designed with robustness and modularity in mind. As such, while currently in use with the JCDeaux API for the Dublin Bikes scheme, it can be adapted to work with other city bike schemes which use the JCDeaux API. It also currently provides data collected during a defined period. With moderate adjustments and hardware support, the 'City Biking Station Interface' can be adapted to run in a live state with data constantly being collected and the hourly averages for stations being recalculated. This would have applications such as users wanting to see how bike usage is impacted by factors such as seasons, bank holidays or price hikes.
 
 * For a full description of the module, visit the project page:
 https://github.com/c-okelly/Software_eng_Dublin_bikes.git
@@ -73,7 +72,7 @@ INSTALLATION
 
 * 	To have the map on the bikes_html page show the correct location change the variable “focus_city_coordinates = [lat, long]” in bikes.js line 1 to the latitude and longitude of the required city.
 
-*  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
+*  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.py.update_averages() run daily. This will update the hourly average table as more data is collected.
 
 
 Running the program
@@ -91,7 +90,7 @@ Running the program
 
 CONFIGURATION
 -----------------
-* 	To run the City Biking Station Interface in its current format, no configuration is required/
+* 	To run the City Biking Station Interface in its current format, no configuration is required
 
 * 	Select the request type via the uses of checkboxes and historical and hourly data for dropdown boxes for year, month, day, hour minute and  day of the week and hour respectively
 
@@ -109,7 +108,7 @@ TROUBLESHOOTING
     - All files for the webisite are in the correct folder
     - Update browser if your version is old
     - Run webpage in case issue is browser specific.
-*   For difficulties connecting to database ensure file path to database is correct
+*   For difficulties connecting to database ensure file path to database is correct. If difficulties persists, run sqllite_database as a main to create a local database.
 
 
 FAQ
