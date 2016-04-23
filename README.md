@@ -64,6 +64,8 @@ INSTALLATION
 - Station number:  
 - for station_no in range(1,103)
 -     if station_no != 50:
+-     for station_no in range(1,103):
+                if station_no != 50:
 
 *  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
 
