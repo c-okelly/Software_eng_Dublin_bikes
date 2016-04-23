@@ -59,8 +59,8 @@ INSTALLATION
 
 
 * 	To adjusted the program to work with other cities which use the JCDeaux Api, /modules/Call_api_and_save_disk.py change contract in url "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin" to city required. Also change Station_no range for city in /modules/insert_dynamic_data.py and /modules/sqllite_database.py to correct number for city requested:
-def get_station_data(api_key):
 
+-     def get_station_data(api_key):
     key_append = '&apiKey=' + api_key
     url = "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin"
     current_json_file = request.urlopen(url+key_append).read()
