@@ -129,6 +129,10 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
             position: {lat: static_data[i]["Lat"], lng: static_data[i]["Long"]}
             });
         
+        // If current data request or hisotical request include station status
+        var station_status = "";
+        if (info_bubble_content[i]["Status"] !== undefined) {station_status = 'The station status is '+info_bubble_content[i]["Status"];}
+        
         // Generate content
         var content_for_station = '<div><img src="website/images/Dublin_bikes_logo.jpg"  style="width:160px;">\
                         <p style="color:white; align:left;">\
@@ -136,6 +140,7 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
                         There are a total of '+info_bubble_content[i]["No_bike_stands"].toFixed(0)+' bike stands<br>\
                         There are '+info_bubble_content[i]["Available_bikes"].toFixed(1)+' bikes availiable<br>\
                         There are '+info_bubble_content[i]["Available_bike_stands"].toFixed(1)+' bikes stands availiable\
+                        '+station_status+'\
                         \</p></div>';
         
         content_array_live.push(content_for_station);
@@ -155,7 +160,7 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
             hideCloseButton: false,
             arrowPosition: 30,
             maxWidth: 200,
-            maxHeight: 140,
+            maxHeight: 160,
             backgroundClassName: '',
             arrowStyle: 2
             });

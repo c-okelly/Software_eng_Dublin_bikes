@@ -101,14 +101,14 @@ def get_stations():
 
     # Live info
     live_stations = []
-    live_rows = cur.execute("SELECT Timestamp, Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
+    live_rows = cur.execute("SELECT Timestamp, Station_number, Bike_stands, Available_bikes, Available_bike_stands,Status FROM Dynamic_Data WHERE Timestamp = (SELECT Timestamp FROM Dynamic_Data ORDER BY TimeStamp DESC LIMIT 1);")
     for i in live_rows:
         live_stations.append(i)
 
     # Turn list into
     live_data = {}
     for i in range(0, len(live_stations)):
-        live_data[i] = {"Timestamp":live_stations[i][0], "Station_no":live_stations[i][1], "No_bike_stands":live_stations[i][2],"Available_bikes":live_stations[i][3],"Available_bike_stands":live_stations[i][4]}
+        live_data[i] = {"Timestamp":live_stations[i][0], "Station_no":live_stations[i][1], "No_bike_stands":live_stations[i][2],"Available_bikes":live_stations[i][3],"Available_bike_stands":live_stations[i][4],"Status":live_stations[i][5]}
 
     total_ob = {"Static_data":stations_dict, "Station_info":live_data}
     json_array = json.dumps(total_ob)
@@ -122,14 +122,14 @@ def Hist_call(Timestamp):
         conn = get_db()
         cur = conn.cursor()
         histarray = []
-        hrows = cur.execute(("SELECT Station_number, Bike_stands, Available_bikes, Available_bike_stands FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number"),(Timestamp,))
+        hrows = cur.execute(("SELECT Station_number, Bike_stands, Available_bikes, Available_bike_stands,Status FROM Dynamic_Data WHERE Timestamp = (?) GROUP BY Station_number"),(Timestamp,))
         for row in hrows:
             histarray.append(row)
 
         # Turn list into
         Hist_dict = {}
         for i in range(0, len(histarray)):
-            Hist_dict[i] = {"Station_no":histarray[i][0], "No_bike_stands":histarray[i][1],"Available_bikes":histarray[i][2],"Available_bike_stands":histarray[i][3]}
+            Hist_dict[i] = {"Station_no":histarray[i][0], "No_bike_stands":histarray[i][1],"Available_bikes":histarray[i][2],"Available_bike_stands":histarray[i][3],"Status":histarray[i][4]}
 
         static_stations = []
         rows = cur.execute("SELECT * from Static_Data;")
