@@ -31,10 +31,10 @@ The 'City Biking Station Interface' program displays a website which allows user
 
 The 'City Biking Station Interface' program is designed with robustness and modularity in mind. As such, while currently in use with the JCDeaux API for the Dublin Bikes programme, it can be adapted to work with other city bike schemes which are managed using the JCDeaux. It also currently provides data collected during a defined period. With moderate adjustments and hardware support, the 'City Biking Station Interface' can be adapted to run in a live state with data constantly being collected and the hourly averages for stations being recalculated. This would have applications such as users wanting to see how the Bike scheme is impacted by factors such as seasons, bank holidays or price hikes.
 
-*For a full description of the module, visit the project page:
+* For a full description of the module, visit the project page:
 https://github.com/c-okelly/Software_eng_Dublin_bikes.git
 
-*To submit bug reports and feature suggestions, or to track changes:
+* To submit bug reports and feature suggestions, or to track changes:
 https://github.com/c-okelly/Software_eng_Dublin_bikes.git
    
 Requirements
@@ -60,7 +60,7 @@ INSTALLATION
 
 * 	To adjusted the program to work with other cities which use the JCDeaux Api, /modules/Call_api_and_save_disk.py change contract in url "https://api.jcdecaux.com/vls/v1/stations?contract=Dublin" to city required. Also change Station_no range for city in /modules/insert_dynamic_data.py and /modules/sqllite_database.py to correct number for city requested.
 
-*To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
+*  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
 
 CONFIGURATION
 -----------------
