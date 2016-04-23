@@ -17,7 +17,7 @@ def main():
 
   # New function to run every minute that saves json to file and updates db
   print("Starting regular scrape of dynamic data now")
-  insert_dynamic_data.run_every_x_minutes_database("dublinbikes_test_database.db")
+  insert_dynamic_data.run_every_x_minutes_database("Database/dublinbikes_database.db")
 
 
 
