@@ -6,7 +6,7 @@ Connor Fitzmaurice
 Shane Kenny
 Conor O' Kelly
 
-The goal of this program is to provide an web based interface to users through which they can determine available bike and available bike stands for stations at the current time or at at given historical timestamp. It will provide predict the chances of bikes and stands being available in stations based in the form of hourly averages.  It does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
+The goal of this program is to provide an web based interface to users through which they can determine available bike and available bike stands for stations at the current time or at at given historical timestamp. It will try to predict the chances of bikes and stands being available in stations by providing hourly averages.  It does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
 
 
 CONTENTS OF THIS FILE
@@ -24,7 +24,7 @@ Introduction
 --------------------
  
  
-The 'City Biking Station Interface' program displays a website which allows user to query live, historical and hourly averages for stations' available bikes and stands using data stored in the SQLite database where averages for number of available bikes and available stands are calculated and recorded. It does so usin does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
+The 'City Biking Station Interface' program displays a website which allows user to query live, historical and hourly averages for stations' available bikes and stands using data stored in the SQLite database where averages for number of available bikes and available stands are calculated and recorded. It does so using data collected at a frequency of 1 minute via an Amazon web instance, for the period of 9th March to 20th April.
 
 ![Alt text](/ReadmeImages/WebsiteMockup.png?raw=true "Website Mockup")
 
@@ -46,6 +46,7 @@ This module requires the following modules:
 *   Flask framework version 0.10.1 https://pypi.python.org/pypi/Flask
 *   SQLite to connect the web application to the database https://www.sqlite.org/download.html
 *   JSON module for parsing data https://pypi.python.org/pypi/simplejson/
+*   Nose2 for testing https://github.com/nose-devs/nose2
 
 RECOMMENDED MODULES
 ----------------------
@@ -68,6 +69,8 @@ INSTALLATION
          return current_json_file
 -     for station_no in range(1,103):
                 if station_no != 50:
+
+* 	To have the map on the bikes_html page show the correct location change the variable “focus_city_coordinates = [lat, long]” in bikes.js line 1 to the latitude and longitude of the required city.
 
 *  To adjust the program to run in a live state import and instantiate function /modules/sqlite_database_queries.pyupdate_averages() run daily. This will update the hourly average table as more data is collected.
 
@@ -98,7 +101,7 @@ FAQ
 Q: 	What do the three colors for the markers on the map mean?
 
 A: 	Each marker is a station station. The color indicates percentage of bikes available.   
--Red Color: Less than 250 of bikes available for hire.  
+-Red Color: Less than 20% of bikes available for hire.  
 -Yellow Color: Between 20% and 60% of bikes available for hire.  
 -Green Color:  More than 60% of bikes available for hire.  
 
