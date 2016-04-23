@@ -130,7 +130,7 @@ var generate_markers_and_info_bubbles = function(static_data, info_bubble_conten
             });
         
         // Generate content
-        var content_for_station = '<div><img src="images/Dublin_bikes_logo.jpg"  style="width:160px;">\
+        var content_for_station = '<div><img src="website/images/Dublin_bikes_logo.jpg"  style="width:160px;">\
                         <p style="color:white; align:left;">\
                         Info for station no '+info_bubble_content[i]["Station_no"]+'<br>\
                         There are a total of '+info_bubble_content[i]["No_bike_stands"].toFixed(0)+' bike stands<br>\
