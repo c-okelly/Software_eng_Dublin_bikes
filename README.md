@@ -79,13 +79,18 @@ Running the program
 -----------------
 * 	To run the program just complete the following steps.
 
-	1. Run master.py. 	
+	1.  Download the Database using this link https://drive.google.com/open?id=0B83Zu0l3mFpjWTJ5RzNLYjhvNTA. Only from your UCD connect email.
+
+	2. Place the Database download in the Database directory in the file.
+
+	3. Run master.py. 	
 	This will generate current data by calling from the the api.
 
-	2. Run app.py.		
+	4. Run app.py.		
 	This will launch flask and have a server ready for date request from the webpage
 
-	3. Open dublin_bikes.html and make the required request.
+	5. Open dublin_bikes.html and make the required request.
+
 
 
 CONFIGURATION
