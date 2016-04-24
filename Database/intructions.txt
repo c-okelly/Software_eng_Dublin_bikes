@@ -1,0 +1,3 @@
+Place Database in this folder.
+
+Name the database "dublinbikes_test_database.db" 
